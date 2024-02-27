@@ -1,0 +1,18 @@
+//Mobile Friendly Media Query
+
+@media (max-width: 481px) {
+  * {
+    display: block;
+    position: relative;
+    margin: 0
+  }
+
+  h2 {
+    display: none;
+  }
+
+  app-variety-selector {
+    position: fixed;
+    bottom: 0;
+  }
+}

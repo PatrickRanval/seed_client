@@ -1,10 +1,12 @@
 <!-- Okay, so tomorrow morning we're going to make the setGridValue() enter a variety -->
-<div class="container">
-  @for (col of gridValues; track col; let i = $index) {
-    <div class="row">
-    @for (row of gridValues[i]; track row; let j = $index) {
-      <div class="cell" (click)="setGridValue(i,j)" [style.background-color]="gridValues[i][j].displayColor"> @if (gridValues[i][j].variety != '') {<span>🌱</span>} </div>
-    }
-  </div> }
+<div class="wrapper">
+  <div class="container">
+    @for (col of gridValues; track col; let i = $index) {
+      <div class="row">
+      @for (row of gridValues[i]; track row; let j = $index) {
+        <div class="cell" (click)="setGridValue(i,j)" [style.background-color]="gridValues[i][j].displayColor"> @if (gridValues[i][j].variety != '') {<span>🌱</span>} </div>
+      }
+    </div> }
+  </div>
 </div>
 

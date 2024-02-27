@@ -9,8 +9,8 @@ import { Subject, Observable, map, BehaviorSubject } from 'rxjs';
 export class SeedService {
   public defaultSeed:Seed = new Seed(
     0,
-    'Mascot',
-    "I'm Sproutly the default seed!"
+    'Pepper',
+    "Habanero"
   )
 
   seedSelected = new BehaviorSubject<Seed>(this.defaultSeed);
