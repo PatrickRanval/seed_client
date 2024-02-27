@@ -1,1 +1,8 @@
-<p>variety-selector works!</p>
+<h4>Send Help, variety-selector.component</h4>
+<div class="container">
+  @for (seed of seedCollection; track seed) {
+    <div (click)="onGetSpecificSeed(seed.uid)" class="seed-item"><button [style.background-color]="seed.displayColor"> 🌱 </button>
+      <span>{{seed.type}}, {{seed.variety}}</span>
+    </div>
+  }
+</div>

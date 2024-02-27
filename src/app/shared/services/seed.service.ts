@@ -7,17 +7,17 @@ import { Subject, Observable, map, BehaviorSubject } from 'rxjs';
   providedIn: 'root'
 })
 export class SeedService {
-  seedSelected = new BehaviorSubject<Seed>(null);
-  seedShelf = new Subject<Seed[]>();
-
-  private mySeeds:Seed[] = [];
-
   public defaultSeed:Seed = new Seed(
     0,
-    'Cucumber',
-    'Piccolo',
-    "hsl(247, 70%, 43%)"
+    'Mascot',
+    "I'm Sproutly the default seed!"
   )
+
+  seedSelected = new BehaviorSubject<Seed>(this.defaultSeed);
+  seedShelf = new Subject<Seed[]>();
+
+  private mySeeds:Seed[] = [this.defaultSeed];
+
 
   constructor(private seedApiService: SeedApiService) { }
 
@@ -27,7 +27,6 @@ export class SeedService {
         return new Seed(
           data.id,
           data.type,
-          data.name,
           data.name)
         })
     );
@@ -39,11 +38,11 @@ export class SeedService {
   //     return this.defaultSeed;
   //   }
 
-  //   addSeedToShelf (seed:Seed) {
-  //     this.mySeeds.push(seed);
-  //     this.seedShelf.next([...this.mySeeds]);
-  //     console.log(this.mySeeds);
-  //   }
+    addSeedToShelf (seed:Seed) {
+      this.mySeeds.push(seed);
+      this.seedShelf.next([...this.mySeeds]);
+      console.log(this.mySeeds);
+    }
 
   //   editSeedOnShelf(editedSeed:Seed, id) {
   //     this.mySeeds.splice(id, 1, editedSeed);
@@ -60,14 +59,14 @@ export class SeedService {
   //     }
   //   }
 
-  //   getSeedShelf() {
-  //   return [...this.mySeeds];
-  // }
+    getSeedShelf() {
+    return [...this.mySeeds];
+  }
 
-  // setSelectedSeedById(id){                          //this method is used a lot
-  //   let selectedSeed = this.mySeeds.slice()[id];
-  //   this.seedSelected.next(selectedSeed);
-  // }
+  setSelectedSeedById(id:number){                          //this method is used a lot
+    let selectedSeed = this.mySeeds.slice()[id];
+    this.seedSelected.next(selectedSeed);
+  }
 
   // setSelectedSeed(seed: Seed) {
   //   this.seedSelected.next(seed);
