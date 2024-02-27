@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Seed } from '../../shared/models/seed.model';
+import { SeedService } from '../../shared/services/seed.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-tray',
@@ -10,10 +13,23 @@ import { Component, OnInit } from '@angular/core';
 export class TrayComponent implements OnInit {
   gridRows = 8
   gridCols = 16
-  gridValues: number[][] = [];
+  gridValues: Seed[][] = [];
+
+  seedSelected!: Seed;
+  private seedSelectedSubscription!: Subscription;
+
+  constructor(private seedService: SeedService) {}
 
   ngOnInit() {
     this.initializeGrid();
+
+    this.seedSelectedSubscription = this.seedService.seedSelected.subscribe((seed) => {
+      this.seedSelected = seed;
+    });
+  }
+
+  ngOnDestroy() {
+    this.seedSelectedSubscription.unsubscribe();
   }
 
   initializeGrid(): void {
@@ -22,14 +38,14 @@ export class TrayComponent implements OnInit {
       this.gridValues[i] = [];
 
       for (let j = 0; j < this.gridCols; j++) {
-        // Set each value to 0
-        this.gridValues[i][j] = 0;
+        // Uhhh... Maybe lots of bugs around this new Seed init
+        this.gridValues[i][j] = new Seed(0, '', '');
       }
     }
   }
 
-  setGridValue(row: number, col: number, value: number) {
-    this.gridValues[row][col] = value;
+  setGridValue(row: number, col: number) {
+    this.gridValues[row][col] = this.seedSelected;
   }
 
 }

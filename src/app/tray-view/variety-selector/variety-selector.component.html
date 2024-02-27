@@ -2,7 +2,7 @@
 <div class="container">
   @for (seed of seedCollection; track seed) {
     <div (click)="onGetSpecificSeed(seed.uid)" class="seed-item"><button [style.background-color]="seed.displayColor"> 🌱 </button>
-      <span>{{seed.type}}, {{seed.variety}}</span>
+      <span><b>{{seed.type}}</b>, '{{seed.variety}}'</span>
     </div>
   }
 </div>
