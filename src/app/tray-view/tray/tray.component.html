@@ -1,1 +1,10 @@
-<!-- Like 3 hours of work trying to understand 2D arrays in the conext of @for -->
+<!-- Okay, so tomorrow morning we're going to make the setGridValue() enter a variety -->
+<div class="container">
+  @for (col of gridValues; track col; let i = $index) {
+    <div class="row">
+    @for (row of gridValues[i]; track row; let j = $index) {
+      <div class="cell"> <button (click)="setGridValue(i,j,42)">{{gridValues[i][j]}}</button></div>
+    }
+  </div> }
+</div>
+

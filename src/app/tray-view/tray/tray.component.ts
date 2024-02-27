@@ -8,24 +8,28 @@ import { Component, OnInit } from '@angular/core';
   styleUrl: './tray.component.scss'
 })
 export class TrayComponent implements OnInit {
-  gridRows = 2
-  gridCols = 3
+  gridRows = 8
+  gridCols = 16
   gridValues: number[][] = [];
 
   ngOnInit() {
     this.initializeGrid();
   }
 
-  initializeGrid() {
-    // Initialize gridRows
-    for (let i = 0; i < this.gridCols; i++) {
-      this.gridValues[i] = []
-      for (let j = 0; j < this.gridRows; j++)
-        this.gridValues[i][j] = i,j,1
+  initializeGrid(): void {
+    for (let i = 0; i < this.gridRows; i++) {
+      // Initialize a new row
+      this.gridValues[i] = [];
+
+      for (let j = 0; j < this.gridCols; j++) {
+        // Set each value to 0
+        this.gridValues[i][j] = 0;
+      }
     }
   }
 
   setGridValue(row: number, col: number, value: number) {
     this.gridValues[row][col] = value;
   }
+
 }
