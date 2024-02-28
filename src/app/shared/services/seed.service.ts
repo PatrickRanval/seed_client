@@ -21,15 +21,11 @@ export class SeedService {
 
   constructor(private seedApiService: SeedApiService) {
     //MORE DEBUG METHOD
-    this.fetchSeed(1).subscribe(
-      (seed) => {
-        this.mySeeds.push(seed); // Add the fetched seed to the array
-      },
-      (error) => {
-        console.error('Error fetching seed:', error);
-      }
-    );
-   }
+    this.fetchSeed(1).subscribe({
+      next: (seed) => this.mySeeds.push(seed),
+      error: (error) => console.error('Error fetching seed:', error)
+    });
+  }
 
   fetchSeed(id: number): Observable<Seed> {
     return this.seedApiService.getSeeds(id).pipe(
@@ -43,17 +39,17 @@ export class SeedService {
     );
   }
 
-    //Debugging method
+  //Debugging method
 
-    returnDefault() {
+ returnDefault() {
       return this.defaultSeed;
-    }
+ }
 
-    addSeedToShelf (seed:Seed) {
+  addSeedToShelf (seed:Seed) {
       this.mySeeds.push(seed);
       this.seedShelf.next([...this.mySeeds]);
       console.log(this.mySeeds);
-    }
+  }
 
   //   editSeedOnShelf(editedSeed:Seed, id) {
   //     this.mySeeds.splice(id, 1, editedSeed);
@@ -70,7 +66,7 @@ export class SeedService {
   //     }
   //   }
 
-    getSeedShelf() {
+  getSeedShelf() {
     return [...this.mySeeds];
   }
 
