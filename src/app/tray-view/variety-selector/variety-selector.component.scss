@@ -8,14 +8,20 @@
   display: flex;
   align-items: center;
   padding: 10px;
-  border: 1px solid #ccc;
+  border: 2px solid black;
   border-radius: 8px;
   cursor: pointer;
+  background-color: var(--appManilla);
   transition: background-color 0.3s ease;
 }
 
 .seed-item:hover {
-  background-color: #f0f0f0;
+  background-color: var(--ssGold);
+}
+
+.selected {
+  transition: background-color 1s ease;
+  background-color: var(--ssLightGreen);
 }
 
 button {

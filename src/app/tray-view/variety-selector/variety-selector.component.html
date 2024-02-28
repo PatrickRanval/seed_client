@@ -1,7 +1,7 @@
 <h4>Your Seed Collection:</h4>
 <div class="container">
   @for (seed of seedCollection; track seed) {
-    <div (click)="onGetSpecificSeed(seed.uid)" class="seed-item"><button [style.background-color]="seed.displayColor"> 🌱 </button>
+    <div (click)="onGetSpecificSeed(seed.uid)" [class.selected]="seedSelected === seed" class="seed-item"><button [style.background-color]="seed.displayColor"> 🌱 </button>
       <span><b>{{seed.type}}</b>, '{{seed.variety}}'</span>
     </div>
   }

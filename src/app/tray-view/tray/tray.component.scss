@@ -28,10 +28,10 @@
     margin-left: 1em;
     transform: rotate(90deg);
     position: relative;
-    top: 10vh; /* Adjust top position as needed */
-    right: 5vw; /* Adjust left position as needed */
-    width: 100%; /* Ensure full width */
-    height: 100%; /* Adjust height as needed */
+    top: 10vh; /* vh seems good here */
+    right: 5vw; /* problems with css abound here */
+    width: 100%;
+    height: 100%;
   }
   .cell {
     transform: rotate(270deg);

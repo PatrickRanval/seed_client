@@ -1,3 +1,60 @@
+:root {
+  --ssDarkGreen: #2C8157;
+  --ssMidGreen: #3B9C6C;
+  --ssLightGreen: #4AB27E;
+  --ssGold: #E0BC65;
+  --trayPurp: #8580E4;
+  --subBrown: #C76824;
+  --seedGreen: #349C5F;
+  --fertBlue: #42ADD0;
+  --appOrange: #EC742F;
+  --bedBrown: #C76824;
+  --taskGreen: #5EB097;
+  --taskGold: #E4AC5B;
+  --bedDarkBrown: #BA5421;
+  --calendarBlue: #42ADD0;
+
+  --appManilla: #ecd7a6;
+  --appGreen: #c4f9a6;
+
+  background-color: var(--appGreen);
+}
+
 body {
   font-family: 'Arial', sans-serif;
+}
+
+.btn-seedstory {
+  color: black;
+  background-color: var(--ssMidGreen);
+  border-radius: 10rem;
+}
+
+.btn-seedstory:hover {
+  box-shadow: inset 0 0 0 20rem var(--taskGold);
+}
+
+.btn-seedstory:active {
+  box-shadow: inset 0 0 0 20rem var(--ssLightGreen),
+}
+
+.btn-seedstory:focus {
+    outline: none;
+    border-color: var(--ssLightGreen);
+    box-shadow: 0 0 0 3px var(--ssMidGreen);
+}
+
+.btn-seedstory:disabled,
+.btn-seedstory.is-disabled {
+  opacity: .5;
+}
+
+.form-control {
+  background-color: beige;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: var(--ssLightGreen);
+    box-shadow: 0 0 0 3px var(--ssMidGreen);
 }
