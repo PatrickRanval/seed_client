@@ -10,5 +10,9 @@ export const routes: Routes = [
   {
     path: 'login',
     loadComponent: () => import('./login/login.component').then((c) => c.LoginComponent)
-  }
+  },
+  {
+    path: 'user',
+    loadComponent: () => import('./tray-view/tray-view.component').then((c) => c.TrayViewComponent),
+  },
 ];

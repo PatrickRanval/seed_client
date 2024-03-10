@@ -9,5 +9,6 @@
       <input type="password" formControlName="password" />
     </div>
     <button type="submit" [disabled]="!loginForm.valid">Login</button>
+    <button type="button" (click)="manuallySetToken()" >DEBUG MANUALLY SET TOKEN</button>
   </form>
 </div>

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormGroup, ReactiveFormsModule, FormControl, Validators } from '@angular/forms';
 import { AuthService } from '../shared/services/auth.service';
 import { Router } from '@angular/router';
+import { UserService } from '../shared/services/user.service';
 
 @Component({
   selector: 'app-login',
@@ -13,7 +14,7 @@ import { Router } from '@angular/router';
 export class LoginComponent {
   loginForm: FormGroup;
 
-  constructor(private authService:AuthService, private router:Router) {
+  constructor(private authService:AuthService, private router:Router, private userService:UserService) {
     this.loginForm = new FormGroup({
       email: new FormControl('', Validators.required),
       password: new FormControl('', Validators.required)
@@ -24,14 +25,19 @@ export class LoginComponent {
     if(this.loginForm.valid) {
       this.authService.login(this.loginForm.value.email, this.loginForm.value.password).subscribe({
         next: (res: any) => {
-          console.log('Logged in with token:', res.token);
+          console.log('Logged in with token:', res);
           this.authService.setToken(res.token);
-          this.router.navigate(['/']);
+          let id = this.userService.getUserId()
+          this.router.navigate([`/user/${id}`]);
         },
         error: (error: any) => {
           console.error('All aboard the failboat! There has been a login error.', error);
         },
       });
     }
+  }
+  manuallySetToken() {
+    this.userService.setUserFromDecodedToken(this.authService.getToken());
+    console.log("SUCCESS")
   }
 }
