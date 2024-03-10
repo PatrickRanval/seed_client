@@ -1,7 +1,7 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { SeedApiService } from './seed-api.service';
 
 @Injectable({
   providedIn: 'root'
@@ -9,13 +9,10 @@ import { BehaviorSubject } from 'rxjs';
 export class AuthService {
   private readonly tokenSubject = new BehaviorSubject<string | null>(null);
 
-  constructor(private http:HttpClient, private router:Router) { }
+  constructor(private seedAPI:SeedApiService, private router:Router) { }
 
-  login(email: string, password: string) {
-		return this.http.post<{ token: string }>('http://localhost:3000/login', {
-			email,
-			password,
-		});
+  login(email: string, password: string): Observable<any> {
+    return this.seedAPI.getAuth(email, password)
 	}
 
 	setToken(token: string) {
