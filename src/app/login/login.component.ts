@@ -3,6 +3,7 @@ import { FormGroup, ReactiveFormsModule, FormControl, Validators } from '@angula
 import { AuthService } from '../shared/services/auth.service';
 import { Router } from '@angular/router';
 import { UserService } from '../shared/services/user.service';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Component({
   selector: 'app-login',
@@ -37,7 +38,10 @@ export class LoginComponent {
     }
   }
   manuallySetToken() {
-    this.userService.setUserFromDecodedToken(this.authService.getToken());
+    let token = this.authService.getToken() || "string";
+    this.userService.setUserFromDecodedToken(token);
     console.log("SUCCESS")
+    let userID = this.userService.getUserId();
+    console.log(userID);
   }
 }
