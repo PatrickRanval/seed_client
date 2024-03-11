@@ -43,4 +43,9 @@ export class SeedShelfComponent {
   onRemoveSeed(uid:number) {
    console.log("You should build the remove seed method");
   }
+
+  //DEBUG METHODS
+  manuallyPopulateSeeds(){
+    console.log('Hello');
+  }
 }

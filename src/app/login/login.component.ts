@@ -39,6 +39,8 @@ export class LoginComponent {
       });
     }
   }
+
+  // DEBUG METHOD
   manuallySetToken() {
     let token = this.authService.getToken() || "string";
     this.userService.setUserFromDecodedToken(token);

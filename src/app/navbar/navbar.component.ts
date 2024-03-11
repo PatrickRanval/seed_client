@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
+import { UserService } from '../shared/services/user.service';
 
 @Component({
   selector: 'app-navbar',
@@ -9,5 +10,12 @@ import { RouterModule } from '@angular/router';
   styleUrl: './navbar.component.scss'
 })
 export class NavbarComponent {
+
+  constructor(private router:Router, private userService:UserService) {}
+
+  onSeedShelf(){
+    let id = this.userService.getUserId()
+    this.router.navigate([`/user/${id}/shelf`]);
+  }
 
 }

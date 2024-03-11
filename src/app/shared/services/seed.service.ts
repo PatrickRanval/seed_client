@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Seed } from '../models/seed.model';
 import { SeedApiService } from './seed-api.service';
-import { Subject, Observable, map, BehaviorSubject } from 'rxjs';
+import { Subject, Observable, map, BehaviorSubject, catchError, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -21,35 +21,52 @@ export class SeedService {
 
   constructor(private seedApiService: SeedApiService) {
     //MORE DEBUG METHOD
-    this.fetchSeed(1).subscribe({
-      next: (seed) => this.mySeeds.push(seed),
+    this.fetchSeed().subscribe({
+      next: (seed) => this.addSeedsToShelf(seed),
       error: (error) => console.error('Error fetching seed:', error)
     });
   }
 
-  fetchSeed(id: number): Observable<Seed> {
-    return this.seedApiService.getSeeds(id).pipe(
-      map((data: any) => {
-        return new Seed(
-          data.id,
-          data.type,
-          data.name
-        );
+  fetchSeed(): Observable<Seed[]> {
+    console.log('seed.service has called fetchSeed()');
+    return this.seedApiService.getSeeds().pipe(
+      map((data: any[]) => {
+        console.log(data);
+
+        // Map the array of data to an array of Seed objects
+        const seeds: Seed[] = data.map(seedData => {
+          return new Seed(
+            seedData.id,
+            // You may need to adjust these properties based on the actual structure of your data
+            "Fake Beets",
+            seedData.variety_id.toString()
+          );
+        });
+        return seeds; // Return the array of seeds to the subscriber
+      }),
+      catchError((error) => {
+        console.error('Error fetching seeds:', error);
+        return throwError(() => error); // Re-throw the error
       })
     );
   }
-
   //Debugging method
 
  returnDefault() {
       return this.defaultSeed;
  }
 
-  addSeedToShelf (seed:Seed) {
-      this.mySeeds.push(seed);
-      this.seedShelf.next([...this.mySeeds]);
-      console.log(this.mySeeds);
-  }
+ addSeedsToShelf (seeds:Seed[]) {
+  this.mySeeds.push(...seeds);
+  this.seedShelf.next([...this.mySeeds]);
+  console.log(this.mySeeds);
+ }
+
+  // addSeedToShelf (seed:Seed) {
+  //     this.mySeeds.push(seed);
+  //     this.seedShelf.next([...this.mySeeds]);
+  //     console.log(this.mySeeds);
+  // }
 
   //   editSeedOnShelf(editedSeed:Seed, id) {
   //     this.mySeeds.splice(id, 1, editedSeed);
