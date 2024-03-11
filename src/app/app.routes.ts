@@ -12,7 +12,7 @@ export const routes: Routes = [
     loadComponent: () => import('./login/login.component').then((c) => c.LoginComponent)
   },
   {
-    path: 'user',
+    path: 'user/:id',
     loadComponent: () => import('./tray-view/tray-view.component').then((c) => c.TrayViewComponent),
   },
 ];

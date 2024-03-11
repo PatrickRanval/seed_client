@@ -28,6 +28,8 @@ export class LoginComponent {
         next: (res: any) => {
           console.log('Logged in with token:', res);
           this.authService.setToken(res.token);
+          // Goin off the rails
+          this.userService.setUserFromDecodedToken(res.token);
           let id = this.userService.getUserId()
           this.router.navigate([`/user/${id}`]);
         },
