@@ -58,3 +58,18 @@ body {
     border-color: var(--ssLightGreen);
     box-shadow: 0 0 0 3px var(--ssMidGreen);
 }
+
+.btn-seed-warn {
+  margin-left: auto;
+  background-color: #ff9898;
+  /* Light red */
+  border: 2px solid #990000; /* 2 pixels border with dark red color */
+  border-radius: 0.5rem; /* Border radius of 0.5rem */
+  color: #990000; /* Dark red text */
+  transition: background-color 0.3s ease; /* Add transition for smoother color change */
+
+  /* Hover state */
+  &:hover {
+    background-color: #ff3333; /* Change to a darker red on hover */
+  }
+}

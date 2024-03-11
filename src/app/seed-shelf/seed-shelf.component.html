@@ -1,0 +1,12 @@
+<div>
+  <h2>My SeedShelf:</h2>
+  @for (seed of seedCollection; track seed) {
+    <div (click)="onGetSpecificSeed(seed.uid)" [class.selected]="seedSelected === seed" class="seed-item">
+      <button [style.background-color]="seed.displayColor"> 🌱 </button>
+      <span><b>{{seed.type}}</b>, '{{seed.variety}}'</span>
+      <button class="btn-seed-warn" style="width: 30%;" (click)="onRemoveSeed(seed.uid)">
+        Remove
+      </button>
+    </div>
+  }
+</div>

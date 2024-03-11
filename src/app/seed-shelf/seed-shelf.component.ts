@@ -1,20 +1,17 @@
 import { Component } from '@angular/core';
-import { SeedService } from '../../shared/services/seed.service';
+import { Seed } from '../shared/models/seed.model';
+import { SeedService } from '../shared/services/seed.service';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { Seed } from '../../shared/models/seed.model';
 
 @Component({
-  selector: 'app-variety-selector',
+  selector: 'app-seed-shelf',
   standalone: true,
   imports: [],
-  templateUrl: './variety-selector.component.html',
-  styleUrl: './variety-selector.component.scss'
+  templateUrl: './seed-shelf.component.html',
+  styleUrl: './seed-shelf.component.scss'
 })
-
-export class VarietySelectorComponent {
-  // ! is disabling strict, which causes an initilization error to be thrown on these declarations
-  // Dunno if this is best practice but it make red line go away
-
+export class SeedShelfComponent {
   seedCollection!: Seed[];
   seedSelected!: Seed;
   private seedShelfSubscription!: Subscription;
@@ -34,11 +31,16 @@ export class VarietySelectorComponent {
   }
 
   ngOnDestroy() {
+
     this.seedShelfSubscription.unsubscribe();
     this.seedSelectedSubscription.unsubscribe();
   }
 
   onGetSpecificSeed(i:number) {
     this.seedService.setSelectedSeedById(i);
+  }
+
+  onRemoveSeed(uid:number) {
+   console.log("You should build the remove seed method");
   }
 }

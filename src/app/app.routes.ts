@@ -15,4 +15,9 @@ export const routes: Routes = [
     path: 'user/:id',
     loadComponent: () => import('./tray-view/tray-view.component').then((c) => c.TrayViewComponent),
   },
+  {
+    path: 'user/:id/shelf',
+    loadComponent: () => import('./seed-shelf/seed-shelf.component').then((c) => c.SeedShelfComponent),
+  },
+
 ];
