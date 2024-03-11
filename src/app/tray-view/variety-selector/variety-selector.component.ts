@@ -38,7 +38,7 @@ export class VarietySelectorComponent {
     this.seedSelectedSubscription.unsubscribe();
   }
 
-  onGetSpecificSeed(i:number) {
-    this.seedService.setSelectedSeedById(i);
+  onGetSpecificSeed(seed:any) {
+    this.seedService.setSelectedSeed(seed);
   }
 }

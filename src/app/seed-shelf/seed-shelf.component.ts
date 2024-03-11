@@ -36,8 +36,8 @@ export class SeedShelfComponent {
     this.seedSelectedSubscription.unsubscribe();
   }
 
-  onGetSpecificSeed(i:number) {
-    this.seedService.setSelectedSeedById(i);
+  onGetSpecificSeed(seed:any) {
+    this.seedService.setSelectedSeed(seed);
   }
 
   onRemoveSeed(uid:number) {
@@ -45,7 +45,5 @@ export class SeedShelfComponent {
   }
 
   //DEBUG METHODS
-  manuallyPopulateSeeds(){
-    console.log('Hello');
-  }
+
 }
