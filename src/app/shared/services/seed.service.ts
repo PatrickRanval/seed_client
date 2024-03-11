@@ -38,8 +38,8 @@ export class SeedService {
           return new Seed(
             seedData.id,
             // You may need to adjust these properties based on the actual structure of your data
-            "Fake Beets",
-            seedData.variety_id.toString()
+            seedData.variety.name,
+            seedData.variety.type.name
           );
         });
         return seeds; // Return the array of seeds to the subscriber
