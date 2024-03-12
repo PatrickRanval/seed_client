@@ -25,12 +25,21 @@ export class SeedApiService {
     const id = this.route.snapshot.paramMap.get('id');
 
     // HARD CODING URL FOR DEBUG
-    let res = this.http.get<any>(`${environment.apiUrl}/users/8/user_varieties`)
+    let res = this.http.get<any>(`${environment.apiUrl}/users/${id}/user_varieties`)
       .pipe(
         catchError(this.handleError)
       );
     console.log(`Response Data:`, res);
     return res;
+  }
+
+  getTrays(): Observable<any> {
+    let res = this.http.get<any>(`${environment.apiUrl}/trays`)
+    .pipe(
+      catchError(this.handleError)
+    );
+  console.log(`Response Data:`, res);
+  return res;
   }
 
   private handleError(error: any) {
