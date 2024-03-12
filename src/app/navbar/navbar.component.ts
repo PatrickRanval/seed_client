@@ -17,5 +17,9 @@ export class NavbarComponent {
     let id = this.userService.getUserId()
     this.router.navigate([`/user/${id}/shelf`]);
   }
+  onTrays(){
+    let id = this.userService.getUserId()
+    this.router.navigate([`/user/${id}/trays`]);
+  }
 
 }

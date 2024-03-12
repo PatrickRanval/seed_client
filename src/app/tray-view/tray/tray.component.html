@@ -4,7 +4,7 @@
     @for (col of traySelected.gridValues; track col; let i = $index) {
       <div class="row">
       @for (row of traySelected.gridValues[i]; track row; let j = $index) {
-        <div class="cell" (click)="setGridValue(i,j)" [style.background-color]="traySelected.gridValues[i][j].displayColor"> @if (gridValues[i][j].variety != '') {<span>🌱</span>} </div>
+        <div class="cell" (click)="setGridValue(i,j)" [style.background-color]="traySelected.gridValues[i][j].displayColor"> @if (traySelected.gridValues[i][j].variety != '') {<span>🌱</span>} </div>
       }
     </div> }
   </div>

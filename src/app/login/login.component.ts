@@ -22,16 +22,38 @@ export class LoginComponent {
     });
   }
 
+  // login() {
+  //   if(this.loginForm.valid) {
+  //     this.authService.login(this.loginForm.value.email, this.loginForm.value.password).subscribe({
+  //       next: (res: any) => {
+  //         console.log('Logged in with token:', res);
+  //         this.authService.setToken(res.token);
+  //         // Goin off the rails
+  //         this.userService.setUserFromDecodedToken(res.token);
+  //         let id = this.userService.getUserId()
+  //         this.router.navigate([`/user/${id}`]);
+  //       },
+  //       error: (error: any) => {
+  //         console.error('All aboard the failboat! There has been a login error.', error);
+  //       },
+  //     });
+  //   }
+  // }
+
   login() {
-    if(this.loginForm.valid) {
+    if (this.loginForm.valid) {
       this.authService.login(this.loginForm.value.email, this.loginForm.value.password).subscribe({
         next: (res: any) => {
           console.log('Logged in with token:', res);
           this.authService.setToken(res.token);
-          // Goin off the rails
-          this.userService.setUserFromDecodedToken(res.token);
-          let id = this.userService.getUserId()
-          this.router.navigate([`/user/${id}`]);
+
+          // Set user and navigate only after the user information has been successfully set
+          this.userService.setUserFromDecodedToken(res.token).subscribe(() => {
+
+            //THINGS ARE SCREWED HERE:
+            let id = this.userService.getUserId();
+            this.router.navigate([`/user/${id}/trays`]);
+          });
         },
         error: (error: any) => {
           console.error('All aboard the failboat! There has been a login error.', error);

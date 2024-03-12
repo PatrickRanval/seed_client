@@ -5,14 +5,14 @@ export const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    loadComponent: () => import('./tray-view/tray-view.component').then((c) => c.TrayViewComponent)
+    loadComponent: () => import('./login/login.component').then((c) => c.LoginComponent)
   },
   {
     path: 'login',
     loadComponent: () => import('./login/login.component').then((c) => c.LoginComponent)
   },
   {
-    path: 'user/:id',
+    path: 'user/:id/trays',
     loadComponent: () => import('./tray-view/tray-view.component').then((c) => c.TrayViewComponent),
   },
   {
