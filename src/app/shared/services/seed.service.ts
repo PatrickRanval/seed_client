@@ -26,14 +26,14 @@ export class SeedService {
 
     //Does this need ngOnInit? No problems yet... unsubscribe...???
 
-    this.fetchSeed().subscribe({
+    this.fetchSeeds().subscribe({
       next: (seed) => this.addSeedsToShelf(seed),
       error: (error) => console.error('Error fetching seed:', error)
     });
 
   }
 
-  fetchSeed(): Observable<Seed[]> {
+  fetchSeeds(): Observable<Seed[]> {
     console.log('seed.service has called fetchSeed()');
     return this.seedApiService.getSeeds().pipe(
       map((data: any[]) => {

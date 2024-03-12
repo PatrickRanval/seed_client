@@ -25,7 +25,7 @@ export class UserService {
         decodedToken.last_name,
         decodedToken.email
       );
-
+      console.log(`From user.service.ts User assigned as ${user}`)
       this.currentUserSubject.next(user);
     } else {
       console.error('Error decoding user information from token.');

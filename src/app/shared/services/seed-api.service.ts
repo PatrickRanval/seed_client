@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
-import { of, Observable, catchError, throwError } from 'rxjs';
+import { of, Observable, catchError, throwError, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { ActivatedRouteSnapshot, Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { environment } from '../../../environments/environment';
-import { Seed } from '../models/seed.model';
+import { UserService } from './user.service';
 
 
 @Injectable({
@@ -12,20 +11,25 @@ import { Seed } from '../models/seed.model';
 })
 export class SeedApiService {
 
-  constructor(private http:HttpClient, private route:ActivatedRoute) { }
+  constructor(private http:HttpClient, private route:ActivatedRoute, private userService:UserService) { }
+
 
   getAuth(email: string, password: string) {
-		return this.http.post<{ token: string }>(`${environment.apiUrl}/login`, {
-			email,
-			password,
-		});
-	}
+    let token = this.http.post<{ token: string }>(`${environment.apiUrl}/login`, {
+      email,
+      password,
+    });
+    return token;
+  }
 
   getSeeds(): Observable<any> {
-    const id = this.route.snapshot.paramMap.get('id');
+    let id = this.userService.getUserId();
+    if (!id) {
+      console.error('Missing id parameter');
+      return throwError(() => new Error('Missing id parameter'));
+    }
 
-    // HARD CODING URL FOR DEBUG
-    let res = this.http.get<any>(`${environment.apiUrl}/users/${id}/user_varieties`)
+    const res = this.http.get<any>(`${environment.apiUrl}/users/${id}/user_varieties`)
       .pipe(
         catchError(this.handleError)
       );

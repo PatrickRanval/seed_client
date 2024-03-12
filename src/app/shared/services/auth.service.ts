@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { SeedApiService } from './seed-api.service';
+import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root'

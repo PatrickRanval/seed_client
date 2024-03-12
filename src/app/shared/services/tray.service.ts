@@ -2,36 +2,70 @@ import { Injectable } from '@angular/core';
 import { Tray } from '../models/tray.model';
 import { Seed } from '../models/seed.model';
 import { SeedApiService } from './seed-api.service';
+import { Subject, Observable, map, BehaviorSubject, catchError, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TrayService {
 
-  constructor(private seedApiService:SeedApiService) { }
+  public defaultTray:Tray = new Tray(
+    "72 Cell",
+    6,
+    12
+  )
 
-  fetchSeed(): Observable<Seed[]> {
-    console.log('seed.service has called fetchSeed()');
-    return this.seedApiService.getSeeds().pipe(
+  traySelected = new BehaviorSubject<Tray>(this.defaultTray);
+  trayShelf = new Subject<Tray[]>();
+
+  private myTrays:Tray[] = [this.defaultTray];
+
+  constructor(private seedApiService:SeedApiService) {
+
+  this.fetchTrays().subscribe({
+    next: (tray) => this.addTraysToShelf(tray),
+    error: (error) => console.error('Error fetching seed:', error)
+  });
+
+  }
+
+  fetchTrays(): Observable<Tray[]> {
+    console.log('seed.service has called fetchTray()');
+    return this.seedApiService.getTrays().pipe(
       map((data: any[]) => {
         console.log(data);
 
-        // Map the array of data to an array of Seed objects
-        const seeds: Seed[] = data.map(seedData => {
-          return new Seed(
-            seedData.variety.id,
-            // You may need to adjust these properties based on the actual structure of your data
-            seedData.variety.name,
-            seedData.variety.type.name
+        // Map the array of data to an array of Tray objects
+        const trays: Tray[] = data.map(trayData => {
+          return new Tray(
+            trayData.name,
+            trayData.cells_short,
+            trayData.cells_long
           );
         });
-        return seeds; // Return the array of seeds to the subscriber
+        return trays; // Return the array of trays to the subscriber
       }),
       catchError((error) => {
-        console.error('Error fetching seeds:', error);
+        console.error('Error fetching trays:', error);
         return throwError(() => error); // Re-throw the error
       })
     );
+  }
+
+  addTraysToShelf (trays:Tray[]) {
+    this.myTrays.push(...trays);
+    this.trayShelf.next([...this.myTrays]);
+    console.log(this.myTrays);
+  }
+
+  getTrayShelf() {
+    return [...this.myTrays];
+  }
+
+  //Not sure if good method, but used a lot
+  setSelectedTray(tray:any){
+    this.initializeGrid(tray);
+    this.traySelected.next(tray);
   }
 
   initializeGrid(tray:Tray): void {
