@@ -10,7 +10,10 @@ const jwtHelper = new JwtHelperService();
   providedIn: 'root',
 })
 export class UserService {
-  private currentUserSubject: BehaviorSubject<User | null> = new BehaviorSubject<User | null>(null);
+
+  public userId:number | null = null;
+
+  public currentUserSubject: BehaviorSubject<User | null> = new BehaviorSubject<User | null>(null);
   public currentUser$: Observable<User | null> = this.currentUserSubject.asObservable();
 
   constructor() {}
@@ -24,7 +27,8 @@ export class UserService {
         decodedToken.last_name,
         decodedToken.email
       );
-      console.log(`From user.service.ts User assigned as ${user}`);
+      console.log(`From user.service.ts User assigned as ${user.userId}`);
+      this.userId = user.userId;
       this.currentUserSubject.next(user);
 
       // Return an Observable to allow chaining and handling completion in the calling code
@@ -35,11 +39,11 @@ export class UserService {
     }
   }
 
-  getUserId():number {
-    return 8;
-  }
-
-  // getUserId(): Observable<number | null> {
-  //   return this.currentUserSubject.pipe(map(user => user ? user.userId : null));
+  // getUserId():number {
+  //   return 8;
   // }
+
+  getUserId(){
+    return this.userId;
+  }
 }

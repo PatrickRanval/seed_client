@@ -23,9 +23,8 @@ export class SeedApiService {
   }
 
   getSeeds(): Observable<any> {
-    let id = this.userService.getUserId();
-    if (!id) {
-      console.error('Missing id parameter');
+    let id = this.userService.getUserId()
+    if (!id) {;
       return throwError(() => new Error('Missing id parameter'));
     }
 

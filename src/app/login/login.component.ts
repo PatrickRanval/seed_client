@@ -46,14 +46,7 @@ export class LoginComponent {
         next: (res: any) => {
           console.log('Logged in with token:', res);
           this.authService.setToken(res.token);
-
-          // Set user and navigate only after the user information has been successfully set
-          this.userService.setUserFromDecodedToken(res.token).subscribe(() => {
-
-            //THINGS ARE SCREWED HERE:
-            let id = this.userService.getUserId();
-            this.router.navigate([`/user/${id}/trays`]);
-          });
+          this.userService.setUserFromDecodedToken(res.token);
         },
         error: (error: any) => {
           console.error('All aboard the failboat! There has been a login error.', error);
@@ -63,11 +56,8 @@ export class LoginComponent {
   }
 
   // DEBUG METHOD
-  manuallySetToken() {
-    let token = this.authService.getToken() || "string";
-    this.userService.setUserFromDecodedToken(token);
-    console.log("SUCCESS")
-    let userID = this.userService.getUserId();
-    console.log(userID);
+  manuallyNavigateAway() {
+    let id = this.userService.getUserId();
+    this.router.navigate([`/user/${id}/trays`]);
   }
 }
