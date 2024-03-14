@@ -9,16 +9,10 @@ import { Subject, Observable, map, BehaviorSubject, catchError, throwError } fro
 })
 export class TrayService {
 
-  public defaultTray:Tray = new Tray(
-    "72 Cell",
-    6,
-    12
-  )
-
-  traySelected = new BehaviorSubject<Tray>(this.defaultTray);
+  traySelected = new BehaviorSubject<Tray | null>(null);
   trayShelf = new Subject<Tray[]>();
 
-  private availableTrays:Tray[] = [this.defaultTray];
+  private availableTrays:Tray[] = [];
 
   constructor(private seedApiService:SeedApiService) {
 

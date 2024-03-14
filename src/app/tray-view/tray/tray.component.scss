@@ -1,9 +1,12 @@
 .container {
-  width: fit-content;
+  // width: fit-content;
+  width: 24rem;
+  height: 12rem;
+  z-index: 2;
   border-style: solid;
   border-width: 5px;
   border-radius: .5em;
-  background-color: #000;
+  background-color: black;
 }
 
 .row {
@@ -11,8 +14,8 @@
 }
 
 .cell {
-  width: 2rem;
-  height: 2rem;
+  // width: 2rem;
+  // height: 2rem;
   border: 2px solid #000;
   border-radius: 0.5em;
   background-color: #C19A6B;

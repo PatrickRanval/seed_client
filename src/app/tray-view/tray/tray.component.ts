@@ -13,23 +13,31 @@ import { TrayService } from '../../shared/services/tray.service';
   styleUrl: './tray.component.scss'
 })
 export class TrayComponent implements OnInit {
-  // gridRows = 8
-  // gridCols = 16
-  // gridValues: Seed[][] = [];
+  cellSize: string = '2rem'; // Default width
 
   seedSelected!: Seed;
   private seedSelectedSubscription!: Subscription;
 
-  traySelected!: Tray;
+  traySelected!: Tray | null;
   private traySelectedSubscription!: Subscription;
 
   constructor(private seedService: SeedService, private trayService:TrayService) {}
 
   ngOnInit() {
-    // this.initializeGrid();
     this.traySelectedSubscription = this.trayService.traySelected.subscribe((tray) => {
-      this.traySelected = tray;
-    })
+      // Check if tray is not null before assigning
+      if (tray) {
+        this.traySelected = tray;
+
+        //Sophisticated Method to procedurally render trays:
+        const totalCells = this.traySelected.cellsShort * this.traySelected.cellsLong;
+        const containerWidth = 24; // in rem
+        const containerHeight = 12; // in rem
+        const cellArea = containerWidth * containerHeight / totalCells;
+        const cellSize = Math.sqrt(cellArea);
+        this.cellSize = `${cellSize}rem`;
+      }
+    });
 
     this.seedSelectedSubscription = this.seedService.seedSelected.subscribe((seed) => {
       this.seedSelected = seed;
@@ -41,20 +49,12 @@ export class TrayComponent implements OnInit {
     this.seedSelectedSubscription.unsubscribe();
   }
 
-  // initializeGrid(): void {
-  //   for (let i = 0; i < this.gridRows; i++) {
-  //     // Initialize a new row
-  //     this.gridValues[i] = [];
-
-  //     for (let j = 0; j < this.gridCols; j++) {
-  //       // Uhhh... Maybe lots of bugs around this new Seed init
-  //       this.gridValues[i][j] = new Seed(0, '', '');
-  //     }
-  //   }
-  // }
 
   setGridValue(row: number, col: number) {
+    if (this.traySelected) {
     this.traySelected.gridValues[row][col] = this.seedSelected;
+    }
   }
+
 
 }
