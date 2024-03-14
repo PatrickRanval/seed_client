@@ -18,19 +18,19 @@ export class TrayService {
   traySelected = new BehaviorSubject<Tray>(this.defaultTray);
   trayShelf = new Subject<Tray[]>();
 
-  private myTrays:Tray[] = [this.defaultTray];
+  private availableTrays:Tray[] = [this.defaultTray];
 
   constructor(private seedApiService:SeedApiService) {
 
   this.fetchTrays().subscribe({
     next: (tray) => this.addTraysToShelf(tray),
-    error: (error) => console.error('Error fetching seed:', error)
+    error: (error) => console.error('Error fetching trays:', error)
   });
 
   }
 
   fetchTrays(): Observable<Tray[]> {
-    console.log('seed.service has called fetchTray()');
+    console.log('tray.service has called fetchTray()');
     return this.seedApiService.getTrays().pipe(
       map((data: any[]) => {
         console.log(data);
@@ -53,13 +53,13 @@ export class TrayService {
   }
 
   addTraysToShelf (trays:Tray[]) {
-    this.myTrays.push(...trays);
-    this.trayShelf.next([...this.myTrays]);
-    console.log(this.myTrays);
+    this.availableTrays.push(...trays);
+    this.trayShelf.next([...this.availableTrays]);
+    console.log(this.availableTrays);
   }
 
   getTrayShelf() {
-    return [...this.myTrays];
+    return [...this.availableTrays];
   }
 
   //Not sure if good method, but used a lot
