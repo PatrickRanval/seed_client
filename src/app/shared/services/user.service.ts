@@ -41,4 +41,9 @@ export class UserService {
   getUserId(){
     return this.userId;
   }
+
+  logout(){
+    this.userId = null;
+    this.currentUserSubject.next(null);
+  }
 }

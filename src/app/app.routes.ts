@@ -5,11 +5,11 @@ export const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    loadComponent: () => import('./landing/landing.component').then((c) => c.LandingComponent)
+    loadComponent: () => import('./login/login.component').then((c) => c.LoginComponent)
   },
   {
-    path: 'login',
-    loadComponent: () => import('./login/login.component').then((c) => c.LoginComponent)
+    path: 'signup',
+    loadComponent: () => import('./landing/landing.component').then((c) => c.LandingComponent)
   },
   {
     path: 'user/:id/trays',
@@ -20,4 +20,4 @@ export const routes: Routes = [
     loadComponent: () => import('./seed-shelf/seed-shelf.component').then((c) => c.SeedShelfComponent),
   },
 
-];
+]; 

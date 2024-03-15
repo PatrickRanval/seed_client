@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { of, Observable, catchError, throwError, tap } from 'rxjs';
+import { Observable, catchError, throwError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { environment } from '../../../environments/environment';
@@ -61,16 +61,4 @@ export class SeedApiService {
     return throwError(() => new Error('Something went wrong. Please try again later.'));
   }
 }
-
-  // getSeeds(id: number): Observable<any> {
-  //   // DUMMY METHOD STAND-IN
-  //   const dummyData = {
-  //     id: 1,
-  //     type: 'Tomato',
-  //     name: 'Black Pineapple'
-  //   };
-
-  //   // Use of to create an observable that emits the dummy data
-  //   return of(dummyData);
-  // }
 

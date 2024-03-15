@@ -7,14 +7,14 @@
   <!-- Dropdown Menu button or any other content -->
 
   <!-- Navigation Links -->
-    <div style="margin-right: 1rem;" class="nav-link-container">
-      <a style="text-decoration: none; color: white;" (click)="onSeedShelf()">My SeedShelf</a>
+    <div style="margin-right: 1rem;" [ngClass]="{ 'disabled': !isUser }" class="nav-link-container" (click)="onSeedShelf()">
+      <a style="text-decoration: none; color: white;">My SeedShelf</a>
     </div>
-    <div style="margin-right: 1rem;" class="nav-link-container">
-      <a style="text-decoration: none; color: white;" (click)="onTrays()">My Trays</a>
+    <div style="margin-right: 1rem;" [ngClass]="{ 'disabled': !isUser }" class="nav-link-container" (click)="onTrays()">
+      <a style="text-decoration: none; color: white;">My Trays</a>
     </div>
-    <div class="nav-link-container">
-      <a style="text-decoration: none; color: white;" routerLink="/login">Log Out</a>
+    <div class="nav-link-container" [ngClass]="{ 'hidden': !isUser }" (click)="onLogout()">
+      <a style="text-decoration: none; color: white;">Log Out</a>
     </div>
 
 

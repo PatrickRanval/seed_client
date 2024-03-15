@@ -7,6 +7,16 @@ nav {
   border-radius: 1rem;
 }
 
+.disabled {
+  pointer-events: none;
+  opacity: 0.5; /* Reduced visibility to indicate disabled */
+}
+
+.hidden {
+  pointer-events: none;
+  opacity: 0; /* Invisible but struturally present */
+}
+
 .nav-link-container {
   margin: 0 1rem 0 1rem;
   padding: .5rem;
