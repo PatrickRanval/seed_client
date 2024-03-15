@@ -5,11 +5,12 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { LoginComponent } from './login/login.component';
 import { AuthService } from './shared/services/auth.service';
 import { UserService } from './shared/services/user.service';
+import { LandingComponent } from './landing/landing.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [TrayViewComponent, NavbarComponent, LoginComponent, RouterModule, RouterOutlet],
+  imports: [LandingComponent, TrayViewComponent, NavbarComponent, LoginComponent, RouterModule, RouterOutlet],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })

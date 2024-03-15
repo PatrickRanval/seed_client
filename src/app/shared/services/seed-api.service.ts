@@ -13,6 +13,14 @@ export class SeedApiService {
 
   constructor(private http:HttpClient, private route:ActivatedRoute, private userService:UserService) { }
 
+  getSignedUp(signupDataForRails:any) {
+    let res = this.http.post(`${environment.apiUrl}/users`, signupDataForRails)
+    .pipe(
+      catchError(this.handleError)
+    );
+    console.log(`Signup Response Data:`, res);
+    return res;
+  }
 
   getAuth(email: string, password: string) {
     let token = this.http.post<{ token: string }>(`${environment.apiUrl}/login`, {

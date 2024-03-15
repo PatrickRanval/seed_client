@@ -5,7 +5,7 @@ export const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    loadComponent: () => import('./login/login.component').then((c) => c.LoginComponent)
+    loadComponent: () => import('./landing/landing.component').then((c) => c.LandingComponent)
   },
   {
     path: 'login',

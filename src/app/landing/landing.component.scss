@@ -1,0 +1,58 @@
+.container {
+  max-width: 75em;
+  margin: 0 auto;
+  padding: 2em;
+  background-color: var(--appManilla);
+  border-radius: 1em;
+  box-shadow: 0 0 1em rgba(0, 0, 0, 0.1);
+}
+
+.container form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.form-group {
+  margin-bottom: 2em;
+}
+
+label {
+  font-weight: bold;
+}
+
+input[type="text"],
+input[type="password"] {
+  display: block;
+  width: 25em;
+  padding: 0.5em;
+  border: none;
+  border-radius: 0.5em;
+  background-color: var(--appGreen);
+}
+
+button[type="submit"] {
+  padding: 1em 2em;
+  width: 25em;
+  align-self: center;
+  border: none;
+  border-radius: 0.5em;
+  background-color: var(--ssMidGreen);
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+button[type="submit"]:hover {
+  background-color: var(--ssLightGreen);
+}
+
+button[type="submit"]:disabled {
+  background-color: var(--ssGold);
+  cursor: not-allowed;
+}
+
+button[type="submit"]:focus {
+  outline: none;
+  box-shadow: 0 0 0 0.3em var(--ssMidGreen);
+}

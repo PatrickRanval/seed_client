@@ -11,6 +11,17 @@ export class AuthService {
 
   constructor(private seedAPI:SeedApiService, private router:Router) { }
 
+  signup(email:string, firstName:string, lastName:string, password:string, passwordConfirm:string): Observable<any> {
+    const signupDataForRails = {
+      email: email,
+      first_name: firstName,
+      last_name: lastName,
+      password: password,
+      password_confirm: passwordConfirm
+    }
+    return this.seedAPI.getSignedUp(signupDataForRails)
+  }
+
   login(email: string, password: string): Observable<any> {
     return this.seedAPI.getAuth(email, password)
 	}
