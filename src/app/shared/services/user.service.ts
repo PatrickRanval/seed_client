@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, from, map } from 'rxjs';
+import { BehaviorSubject, Observable, from } from 'rxjs';
 import { User } from '../models/user.model';
-import { AuthService } from './auth.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
 
 const jwtHelper = new JwtHelperService();
@@ -38,10 +37,6 @@ export class UserService {
       return from(Promise.reject('Error decoding user information from token.'));
     }
   }
-
-  // getUserId():number {
-  //   return 8;
-  // }
 
   getUserId(){
     return this.userId;

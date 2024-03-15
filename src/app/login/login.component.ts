@@ -3,7 +3,6 @@ import { FormGroup, ReactiveFormsModule, FormControl, Validators } from '@angula
 import { AuthService } from '../shared/services/auth.service';
 import { Router } from '@angular/router';
 import { UserService } from '../shared/services/user.service';
-import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Component({
   selector: 'app-login',

@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { TrayComponent } from './tray/tray.component';
 import { VarietySelectorComponent } from './variety-selector/variety-selector.component';
 import { TraySelectorComponent } from './tray-selector/tray-selector.component';
-import { TrayService } from '../shared/services/tray.service';
 
 @Component({
   selector: 'app-tray-view',
