@@ -10,16 +10,16 @@ export class SeedService {
 
   //defaultSeed is a bad dumb solution that needs work.
   //Initializing BehaviorSubject is the problem.
-  public defaultSeed:Seed = new Seed(
-    0,
-    'MissingNo.',
-    "Default"
-  )
+  // public defaultSeed:Seed = new Seed(
+  //   0,
+  //   'MissingNo.',
+  //   "Default"
+  // )
 
-  seedSelected = new BehaviorSubject<Seed>(this.defaultSeed);
+  seedSelected = new BehaviorSubject<Seed | null>(null);
   seedShelf = new Subject<Seed[]>();
 
-  private mySeeds:Seed[] = [this.defaultSeed];
+  private mySeeds:Seed[] = [];
 
 
   constructor(private seedApiService: SeedApiService) {

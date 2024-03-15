@@ -13,7 +13,7 @@ import { Subscription } from 'rxjs';
 })
 export class SeedShelfComponent {
   seedCollection!: Seed[];
-  seedSelected!: Seed;
+  seedSelected: Seed | null = null;
   private seedShelfSubscription!: Subscription;
   private seedSelectedSubscription!: Subscription;
 

@@ -15,7 +15,7 @@ import { TrayService } from '../../shared/services/tray.service';
 export class TrayComponent implements OnInit {
   cellSize: string = '2rem'; // Default width
 
-  seedSelected!: Seed;
+  seedSelected!: Seed | null;
   private seedSelectedSubscription!: Subscription;
 
   traySelected!: Tray | null;
@@ -51,7 +51,7 @@ export class TrayComponent implements OnInit {
 
 
   setGridValue(row: number, col: number) {
-    if (this.traySelected) {
+    if (this.traySelected && this.seedSelected) {
     this.traySelected.gridValues[row][col] = this.seedSelected;
     }
   }

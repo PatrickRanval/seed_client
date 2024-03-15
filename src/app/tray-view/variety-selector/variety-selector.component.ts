@@ -16,7 +16,7 @@ export class VarietySelectorComponent {
   // Dunno if this is best practice but it make red line go away
 
   seedCollection!: Seed[];
-  seedSelected!: Seed;
+  seedSelected: Seed | null = null;
   private seedShelfSubscription!: Subscription;
   private seedSelectedSubscription!: Subscription;
 
