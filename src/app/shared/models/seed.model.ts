@@ -1,11 +1,11 @@
 export class Seed {
-  public uid: number;
+  public uid: number | null;
   public type: string;
   public variety: string;
   public displayColor: string;
 
 
-  constructor(uid: number, type: string, variety: string) {
+  constructor(uid: number | null, type: string, variety: string) {
     this.uid = uid;
     this.type = type;
     this.variety = variety;

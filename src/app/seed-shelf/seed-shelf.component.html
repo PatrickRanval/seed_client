@@ -4,9 +4,17 @@
     <div (click)="onGetSpecificSeed(seed)" [class.selected]="seedSelected === seed" class="seed-item">
       <button [style.background-color]="seed.displayColor"> 🌱 </button>
       <span><b>{{seed.type}}</b>, '{{seed.variety}}'</span>
-      <button class="btn-seed-warn" style="width: 30%;" (click)="onRemoveSeed(seed.uid)">
+      <button class="btn-seed-warn" style="width: 30%;" (click)="onRemoveSeed(seed)">
         Remove
       </button>
     </div>
   }
+  <div class="seed-item">
+    <button style="background-color: #000"> 🌱 </button>
+    <input type="text" style="font-weight: bold;" [(ngModel)]="type" placeholder="Type,">
+    <input type="text" [(ngModel)]="variety" placeholder="'Variety'">
+    <button class="btn-seed-add" [disabled]="!type || !variety" style="width: 30%;" (click)="onCreateSeed()">
+      Add Seed
+    </button>
+  </div>
 </div>

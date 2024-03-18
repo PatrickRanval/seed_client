@@ -8,14 +8,6 @@ import { Subject, Observable, map, BehaviorSubject, catchError, throwError } fro
 })
 export class SeedService {
 
-  //defaultSeed is a bad dumb solution that needs work.
-  //Initializing BehaviorSubject is the problem.
-  // public defaultSeed:Seed = new Seed(
-  //   0,
-  //   'MissingNo.',
-  //   "Default"
-  // )
-
   seedSelected = new BehaviorSubject<Seed | null>(null);
   seedShelf = new Subject<Seed[]>();
 
@@ -27,7 +19,7 @@ export class SeedService {
     //Does this need ngOnInit? No problems yet... unsubscribe...???
 
     this.fetchSeeds().subscribe({
-      next: (seed) => this.addSeedsToShelf(seed),
+      next: (seed) => this.populateShelf(seed),
       error: (error) => console.error('Error fetching seed:', error)
     });
 
@@ -43,7 +35,6 @@ export class SeedService {
         const seeds: Seed[] = data.map(seedData => {
           return new Seed(
             seedData.variety.id,
-            // You may need to adjust these properties based on the actual structure of your data
             seedData.variety.name,
             seedData.variety.type.name
           );
@@ -57,7 +48,7 @@ export class SeedService {
     );
   }
 
-  addSeedsToShelf (seeds:Seed[]) {
+populateShelf (seeds:Seed[]) {
   this.mySeeds.push(...seeds);
   this.seedShelf.next([...this.mySeeds]);
   console.log(this.mySeeds);
@@ -72,11 +63,20 @@ setSelectedSeed(seed:any){
   this.seedSelected.next(seed);
 }
 
-// addSeedToShelf (seed:Seed) {
-  //     this.mySeeds.push(seed);
-  //     this.seedShelf.next([...this.mySeeds]);
-  //     console.log(this.mySeeds);
-  // }
+addSeedToShelf (seed:Seed) {
+      this.mySeeds.push(seed);
+      this.seedShelf.next([...this.mySeeds]);
+  }
+
+removeSeedFromShelf(seed:Seed) {
+  const index = this.mySeeds.findIndex(item => item === seed);
+  // If the seed is found, remove it from the array
+  if (index !== -1) {
+    this.mySeeds.splice(index, 1);
+    // Emit the updated array using the BehaviorSubject
+    this.seedShelf.next([...this.mySeeds]);
+  }
+}
 
   //   editSeedOnShelf(editedSeed:Seed, id) {
     //     this.mySeeds.splice(id, 1, editedSeed);

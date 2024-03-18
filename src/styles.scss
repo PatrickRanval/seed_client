@@ -16,6 +16,7 @@
   --calendarBlue: #42ADD0;
 
   --appManilla: #ecd7a6;
+  --appLightManilla: #f9f3e5;
   --appGreen: #c4f9a6;
 
   background-color: var(--appGreen);
@@ -73,4 +74,24 @@ body {
   &:hover {
     background-color: #ff3333; /* Change to a darker red on hover */
   }
+}
+
+.btn-seed-add {
+  margin-left: auto;
+  background-color: var(--ssLightGreen); /* Green background color */
+  border: 2px solid var(--ssDarkGreen); /* 2 pixels border with dark green color */
+  border-radius: 0.5rem; /* Border radius of 0.5rem */
+  color: var(--appLightManilla); /* Light Text */
+  transition: background-color 0.3s ease; /* Add transition for smoother color change */
+}
+
+.btn-seed-add[disabled] {
+  opacity: 0.5; /* Reduce opacity to visually indicate disabled state */
+  cursor: not-allowed; /* Change cursor to indicate not clickable */
+  filter: grayscale(25%); /* Apply grayscale filter to mute colors */
+}
+
+/* Hover state */
+.btn-seed-add:hover {
+  background-color: #33b435; /* Change to a darker green on hover */
 }

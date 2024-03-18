@@ -31,4 +31,12 @@ button {
   font-size: 1em;
 }
 
+input {
+  background-color: transparent;
+  font-size: 1em;
+  border: none;
+  border-bottom: 2px dashed #CCC; /* Add dotted underline */
+  /* outline: none;  Remove default focus outline */
+}
+
 
