@@ -12,7 +12,7 @@ import { Subscription } from 'rxjs';
 })
 
 export class TraySelectorComponent implements OnInit, OnDestroy {
-  availableTrays:Tray[] = [];
+  availableTrays:Tray[] | null = [];
   selectedTray:Tray | null = null;
   private traySubscription!: Subscription;
   private traySelectedSubscription!: Subscription;

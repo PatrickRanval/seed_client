@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, catchError, throwError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { ActivatedRoute } from '@angular/router';
 import { environment } from '../../../environments/environment';
 import { UserService } from './user.service';
 
@@ -11,8 +10,9 @@ import { UserService } from './user.service';
 })
 export class SeedApiService {
 
-  constructor(private http:HttpClient, private route:ActivatedRoute, private userService:UserService) { }
+  constructor(private http:HttpClient, private userService:UserService) { }
 
+  //I thought this was funny at the time, but it's the dumbest named method.
   getSignedUp(signupDataForRails:any) {
     let res = this.http.post(`${environment.apiUrl}/users`, signupDataForRails)
     .pipe(
@@ -52,6 +52,19 @@ export class SeedApiService {
   console.log(`Response Data:`, res);
   return res;
   }
+
+
+  getUserTrays(){
+    console.log("Build getUserTrays()")
+      //This method is index host/:user/user_trays for currentUser
+  }
+
+  postUserTrays(){
+    console.log("Build saveUserTrays()")
+      //This method is post host/:user/user_trays for currentUser
+      //Question around whether this should rewrite everything every time or just target specific user_tray each time
+  }
+
 
   private handleError(error: any) {
 
