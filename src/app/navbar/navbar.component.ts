@@ -1,8 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { RouterModule, Router } from '@angular/router';
 import { UserService } from '../shared/services/user.service';
 import { AuthService } from '../shared/services/auth.service';
 import { CommonModule } from '@angular/common';
+import { Subscription } from 'rxjs';
+import { User } from '../shared/models/user.model';
 
 @Component({
   selector: 'app-navbar',
@@ -11,27 +13,38 @@ import { CommonModule } from '@angular/common';
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss'
 })
-export class NavbarComponent {
+export class NavbarComponent implements OnInit, OnDestroy {
 
-  public isUser:boolean = false;
+  public isUser: boolean = false;
+  private currentUserSubscription: Subscription | undefined;
 
-  constructor(private router:Router, private userService:UserService, private authService:AuthService) {}
+  constructor(private router: Router, private userService: UserService, private authService: AuthService) {}
 
-  checkUser():void {
-    this.isUser = !!this.userService.getUserId();
+  ngOnInit(): void {
+    this.currentUserSubscription = this.userService.currentUserSubject.subscribe((user: User | null) => {
+      this.isUser = !!user; // Set isUser based on whether user is present
+    });
   }
 
-  onSeedShelf(){
-    let id = this.userService.getUserId()
+  ngOnDestroy(): void {
+    if (this.currentUserSubscription) {
+      this.currentUserSubscription.unsubscribe();
+    }
+  }
+
+  onSeedShelf(): void {
+    const id = this.userService.getUserId();
     this.router.navigate([`/user/${id}/shelf`]);
   }
-  onTrays(){
-    let id = this.userService.getUserId()
+
+  onTrays(): void {
+    const id = this.userService.getUserId();
     this.router.navigate([`/user/${id}/trays`]);
   }
-  onLogout(){
-    this.authService.logout()
-    this.userService.logout()
-  }
 
+  onLogout(): void {
+    this.authService.logout();
+    this.userService.logout();
+    this.router.navigate(['']);
+  }
 }
