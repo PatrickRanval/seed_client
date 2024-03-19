@@ -1,1 +1,9 @@
 <p>user-trays works!</p>
+<div class="container">
+  @for (tray of availableUserTrays; track tray.trayName) {
+  <div class="tray-item" (click)="onSelectTray(tray)">
+      <div>{{ tray.trayName }}</div>
+      <div> {{tray.cellsShort}} × {{tray.cellsLong}}</div>
+  </div>
+  }
+  </div>

@@ -20,21 +20,18 @@ export class UserTraysComponent {
   constructor(private userTrayService:UserTraysService) {}
 
   ngOnInit(): void {
-    this.userTraySubscription = this.userTrayService.trayShelf.subscribe(trays => {
-      this.availableTrays = trays;
+    this.userTraySubscription = this.userTrayService.userTrayShelf.subscribe(trays => {
+      this.availableUserTrays = trays;
     });
-    this.userTraySelectedSubscription = this.userTrayService.traySelected.subscribe(tray => {
-      this.selectedTray = tray;
+    this.userTraySelectedSubscription = this.userTrayService.userTraySelected.subscribe(tray => {
+      this.selectedUserTray = tray;
     });
   }
 
   onSelectTray(tray:Tray) {
-    this.userTrayService.setSelectedTray(tray)
+    this.userTrayService.setSelectedUserTray(tray)
   }
 
-  toggleHide(){
-    this.hide = !this.hide;
-  }
 
   ngOnDestroy(): void {
     if (this.userTraySubscription) {
@@ -45,4 +42,7 @@ export class UserTraysComponent {
     }
   }
 
+  // toggleHide(){
+  //   this.hide = !this.hide;
+  // }
 }

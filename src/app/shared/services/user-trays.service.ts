@@ -11,10 +11,12 @@ export class UserTraysService {
 
   constructor(private seedApiService:SeedApiService) { }
 
-  userTraySelected = new BehaviorSubject<Tray | null>(null);
-  userTrayShelf = new BehaviorSubject<Tray[] | null>(null);
+  defaultTray = new Tray("Default 128", 8, 16)
+  private availableUserTrays:Tray[] = [this.defaultTray];
 
-  private availableUserTrays:Tray[] = [];
+  userTraySelected = new BehaviorSubject<Tray | null>(this.defaultTray);
+  userTrayShelf = new BehaviorSubject<Tray[] | null>(this.availableUserTrays);
+
 
 
   //SCOPE:
