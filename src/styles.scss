@@ -7,17 +7,18 @@
   --trayLav: #d6d6f6;
   --subBrown: #C76824;
   --seedGreen: #349C5F;
-  --fertBlue: #42ADD0;
+
   --appOrange: #EC742F;
   --bedBrown: #C76824;
   --taskGreen: #5EB097;
   --taskGold: #E4AC5B;
   --bedDarkBrown: #BA5421;
-  --calendarBlue: #42ADD0;
 
   --appManilla: #ecd7a6;
   --appLightManilla: #f9f3e5;
   --appGreen: #c4f9a6;
+  --appBlue: #42ADD0;
+  --appLightBlue: #a3ddee;
 
   background-color: var(--appGreen);
 }
@@ -94,4 +95,18 @@ body {
 /* Hover state */
 .btn-seed-add:hover {
   background-color: #33b435; /* Change to a darker green on hover */
+}
+
+.btn-seed-neutral {
+  margin-top: 1em;
+  padding: 0.5em;
+  border: 2px solid black;
+  background-color: var(--appLightBlue);
+  color: black;
+  border-radius: 0.5rem;
+  transition: background-color 0.3s ease;
+}
+
+.btn-seed-neutral:hover {
+  background-color: var(--appBlue);
 }

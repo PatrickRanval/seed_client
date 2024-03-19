@@ -12,6 +12,8 @@ import { Subscription } from 'rxjs';
 })
 
 export class TraySelectorComponent implements OnInit, OnDestroy {
+  hide:boolean = false;
+
   availableTrays:Tray[] | null = [];
   selectedTray:Tray | null = null;
   private traySubscription!: Subscription;
@@ -30,6 +32,10 @@ export class TraySelectorComponent implements OnInit, OnDestroy {
 
   onSelectTray(tray:Tray) {
     this.trayService.setSelectedTray(tray)
+  }
+  
+  toggleHide(){
+    this.hide = !this.hide;
   }
 
   ngOnDestroy(): void {

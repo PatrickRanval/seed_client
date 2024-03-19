@@ -1,11 +1,15 @@
-<h4>Select Your Tray:</h4>
-<div class="container">
-@for (tray of availableTrays; track tray.trayName) {
-<div class="tray-item" (click)="onSelectTray(tray)">
-    <div>{{ tray.trayName }}</div>
-    <div> {{tray.cellsShort}} × {{tray.cellsLong}}</div>
+@if(!hide){
+  <div>
+    <h4>Select A Blank Tray:</h4>
+    <div class="container">
+    @for (tray of availableTrays; track tray.trayName) {
+    <div class="tray-item" (click)="onSelectTray(tray)">
+        <div>{{ tray.trayName }}</div>
+        <div> {{tray.cellsShort}} × {{tray.cellsLong}}</div>
+    </div>
+    }
+    </div>
 </div>
 }
-</div>
-
+<button class="btn-seed-neutral" (click)="toggleHide()">Collapse</button>
 <h3>Plant your Tray:</h3>
