@@ -23,6 +23,7 @@ export class UserTraysService {
   //user-trays will save these mapped generic trays as unique objects associated with the user
   //user-trays will be invoked within the tray component
 
+
   fetchUserTrays(){
     //This method gets all the user_trays and sets userTraySelected to the .last value of the array
     this.seedApiService.getUserTrays();
@@ -44,5 +45,20 @@ export class UserTraysService {
 
   //I think it is possible or even likely that all tray rendering logic winds up in user-tray.service (which would move initialize grid from tray.service to user_tray.service)
 
+  setSelectedUserTray(tray:any){
+    this.initializeGrid(tray);
+    this.userTraySelected.next(tray);
+  }
 
+  initializeGrid(tray:Tray): void {
+    for (let i = 0; i < tray.cellsShort; i++) {
+      // Initialize a new row
+      tray.gridValues[i] = [];
+
+      for (let j = 0; j < tray.cellsLong; j++) {
+        // Uhhh... Maybe lots of bugs around this new Seed init
+        tray.gridValues[i][j] = new Seed(0, '', '');
+      }
+    }
+  }
 }
