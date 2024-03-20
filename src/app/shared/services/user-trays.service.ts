@@ -48,19 +48,21 @@ export class UserTraysService {
   //I think it is possible or even likely that all tray rendering logic winds up in user-tray.service (which would move initialize grid from tray.service to user_tray.service)
 
   setSelectedUserTray(tray:any){
-    this.initializeGrid(tray);
+    this.populateGrid(tray);
     this.userTraySelected.next(tray);
   }
 
-  initializeGrid(tray:Tray): void {
+  populateGrid(tray: Tray): void {
     for (let i = 0; i < tray.cellsShort; i++) {
-      // Initialize a new row
-      tray.gridValues[i] = [];
+        if (!tray.gridValues[i]) {
+            tray.gridValues[i] = []; // Initialize the row only if it hasn't been initialized yet
+        }
 
-      for (let j = 0; j < tray.cellsLong; j++) {
-        // Uhhh... Maybe lots of bugs around this new Seed init
-        tray.gridValues[i][j] = new Seed(0, '', '');
-      }
+        for (let j = 0; j < tray.cellsLong; j++) {
+            if (!tray.gridValues[i][j]) {
+                tray.gridValues[i][j] = new Seed(0, '', ''); // Initialize a new seed only if the cell is empty
+            }
+        }
     }
-  }
+}
 }
