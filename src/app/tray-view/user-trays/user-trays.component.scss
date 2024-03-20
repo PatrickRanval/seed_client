@@ -1,0 +1,40 @@
+.container {
+  display: flex;
+}
+
+.tray-item {
+  width: 6em; /* Adjust as needed */
+  height: 3em; /* Adjust as needed */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1em; /* Adjust padding */
+  border: 0.125em solid black; /* Adjust border */
+  border-radius: 0.5em; /* Adjust border-radius */
+  cursor: pointer;
+  background-color: var(--trayLav);
+  transition: background-color 0.3s ease;
+}
+
+.tray-item:hover {
+  background-color: var(--trayPurp);
+}
+
+.tray-item.selected {
+  transition: background-color 1s ease;
+  background-color: var(--trayPurp);
+}
+
+.tray-item .info {
+  text-align: center;
+  margin-top: 1em; /* Adjust margin */
+}
+
+.tray-item .tray-name {
+  font-weight: bold;
+}
+
+.tray-item .cell-count {
+  font-size: 0.8em; /* Adjust font size */
+}
