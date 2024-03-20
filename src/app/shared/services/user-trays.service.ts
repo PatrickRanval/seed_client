@@ -39,11 +39,24 @@ export class UserTraysService {
     //this method logically exists, but is likely unnecessary
   }
 
-  saveUserTray(){
-    //this method takes the userTraySelected in its current state and sends it to the database.
-    //This method should prevent saving empty trays.
+  saveUserTray(tray: Tray) {
+    // This method takes the userTraySelected in its current state and sends it to the database.
+    // This method should prevent saving empty trays.
+
+    // Check if the tray already exists in availableUserTrays
+    const index = this.availableUserTrays.indexOf(tray)
+
+    if (index !== -1) {
+        // Tray already exists, update it
+        this.availableUserTrays[index] = tray;
+    } else {
+        // Tray doesn't exist, add it to the array
+        this.availableUserTrays.push(tray);
+    }
+
+    // Now that availableUserTrays is updated, you may want to send it to the database
     this.seedApiService.postUserTrays();
-  }
+}
 
   //I think it is possible or even likely that all tray rendering logic winds up in user-tray.service (which would move initialize grid from tray.service to user_tray.service)
 
