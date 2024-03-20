@@ -44,7 +44,7 @@ export class UserTraysService {
     // This method should prevent saving empty trays.
 
     // Check if the tray already exists in availableUserTrays
-    const index = this.availableUserTrays.indexOf(tray)
+      const index = this.availableUserTrays.indexOf(tray)
 
     if (index !== -1) {
         // Tray already exists, update it
@@ -53,6 +53,8 @@ export class UserTraysService {
         // Tray doesn't exist, add it to the array
         this.availableUserTrays.push(tray);
     }
+    //broadcast updated array
+    this.userTrayShelf.next(this.availableUserTrays);
 
     // Now that availableUserTrays is updated, you may want to send it to the database
     this.seedApiService.postUserTrays();

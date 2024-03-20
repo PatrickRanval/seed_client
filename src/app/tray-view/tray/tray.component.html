@@ -1,14 +1,25 @@
 <!-- Okay, so tomorrow morning we're going to make the setGridValue() enter a variety -->
 <div class="wrapper">
+
 @if (traySelected) {
   <div class="container">
     @for (col of traySelected.gridValues!; track col; let i = $index) {
       <div class="row">
-      @for (row of traySelected.gridValues[i]; track row; let j = $index) {
-        <div class="cell" [style.height]="cellSize" [style.width]="cellSize" (click)="setGridValue(i,j)" [style.background-color]="traySelected.gridValues[i][j].displayColor"> @if (traySelected.gridValues[i][j].variety != '') {<span>🌱</span>} </div>
+        @for (row of traySelected.gridValues[i]; track row; let j = $index) {
+          <div class="cell" [style.height]="cellSize" [style.width]="cellSize" (click)="setGridValue(i,j)" [style.background-color]="traySelected.gridValues[i][j].displayColor"> @if (traySelected.gridValues[i][j].variety != '') {<span>🌱</span>} </div>
+        }
+      </div>
+    }
+      @if(saveSuccess) {
+        <div class="modal-overlay">
+          <div class="success">
+            SUCCESS!
+          </div>
+        </div>
       }
-    </div> }
   </div>
+
+  <button class="btn-seed-add" (click)="saveAsUserTray(traySelected)">Save Tray!</button>
 }
 </div>
 

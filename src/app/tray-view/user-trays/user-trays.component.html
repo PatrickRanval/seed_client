@@ -1,6 +1,6 @@
 <h4>Your Planted Trays:</h4>
 <div class="container">
-  @for (tray of availableUserTrays; track tray.trayName) {
+  @for (tray of availableUserTrays; track $index) {
   <div class="tray-item" (click)="onSelectTray(tray)">
       <div>{{ tray.trayName }}</div>
       <div>✅ {{tray.cellsShort}} × {{tray.cellsLong}}</div>
