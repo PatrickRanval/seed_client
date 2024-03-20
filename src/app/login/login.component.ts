@@ -45,7 +45,17 @@ export class LoginComponent {
         next: (res: any) => {
           console.log('Logged in with token:', res);
           this.authService.setToken(res.token);
-          this.userService.setUserFromDecodedToken(res.token);
+          //We're going to decode user information from the token. This takes time.
+          //We subscribe to the result and once it returns we route the user away.
+          this.userService.setUserFromDecodedToken(res.token).subscribe({
+            next: () => {
+              let id = this.userService.currentUserSubject.value?.userId
+              this.router.navigate([`/user/${id}/trays`]);
+            },
+            error: (err) => {
+              console.error('Error setting user from decoded token:', err);
+            }
+          });
         },
         error: (error: any) => {
           console.error('All aboard the failboat! There has been a login error.', error);
