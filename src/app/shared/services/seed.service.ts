@@ -58,7 +58,6 @@ getSeedShelf() {
   return [...this.mySeeds];
 }
 
-//Not sure if good method, but used a lot
 setSelectedSeed(seed:any){
   this.seedSelected.next(seed);
 }

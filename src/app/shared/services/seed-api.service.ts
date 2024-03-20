@@ -44,6 +44,18 @@ export class SeedApiService {
     return res;
   }
 
+  sendSeed(seed:Seed) {
+    //START HERE::
+    
+    //okay, so this needs to send a post request to varieties
+    //when it's there, it needs to check if the variety exists
+    //Then it needs to add it if it doesn't
+
+    this.http.post(`${environment.apiUrl}/varieties`, {
+
+    });
+  }
+
   getTrays(): Observable<any> {
     let res = this.http.get<any>(`${environment.apiUrl}/trays`)
     .pipe(

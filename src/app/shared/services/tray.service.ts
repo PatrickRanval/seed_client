@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Tray } from '../models/tray.model';
 import { Seed } from '../models/seed.model';
 import { SeedApiService } from './seed-api.service';
-import { Subject, Observable, map, BehaviorSubject, catchError, throwError } from 'rxjs';
+import { Observable, map, BehaviorSubject, catchError, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +22,7 @@ export class TrayService {
   constructor(private seedApiService:SeedApiService) {
 
   //Fix to initialize with ngOnInit and unsubscribe ngOnDestroy
-  
+
   this.fetchTrays().subscribe({
     next: (tray) => this.addTraysToShelf(tray),
     error: (error) => console.error('Error fetching trays:', error)
