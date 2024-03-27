@@ -3,6 +3,7 @@ import { Observable, catchError, throwError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { UserService } from './user.service';
+import { Seed } from '../models/seed.model';
 
 
 @Injectable({
@@ -44,16 +45,15 @@ export class SeedApiService {
     return res;
   }
 
-  sendSeed(seed:Seed) {
+  sendSeed(seedDataToRails:any) {
     //START HERE::
-    
-    //okay, so this needs to send a post request to varieties
-    //when it's there, it needs to check if the variety exists
-    //Then it needs to add it if it doesn't
 
-    this.http.post(`${environment.apiUrl}/varieties`, {
+    //okay, so this needs to add the seed by type_name, variety_name
+    //this adds variety to varieties table OR matches it to an existing record
+    //then we need to call a method to add that record to user_varieties
 
-    });
+
+    this.http.post(`${environment.apiUrl}/varieties`, { seedDataToRails });
   }
 
   getTrays(): Observable<any> {

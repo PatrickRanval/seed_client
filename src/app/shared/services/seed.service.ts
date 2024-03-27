@@ -29,7 +29,7 @@ export class SeedService {
     console.log('seed.service has called fetchSeed()');
     return this.seedApiService.getSeeds().pipe(
       map((data: any[]) => {
-        console.log(data);
+        console.log("From fetchSeeds in seed.service.ts", data);
 
         // Map the array of data to an array of Seed objects
         const seeds: Seed[] = data.map(seedData => {
@@ -77,6 +77,21 @@ removeSeedFromShelf(seed:Seed) {
   }
 }
 
+sendSeedToDB(seed:Seed){
+  //Uhhh.... not sure about the organization here.
+
+  const seedDataToRails = {
+    type_name: seed.type,
+    variety_name: seed.variety
+  }
+
+this.seedApiService.sendSeed(seedDataToRails);
+
+
+}
+
+}
+
   //   editSeedOnShelf(editedSeed:Seed, id) {
     //     this.mySeeds.splice(id, 1, editedSeed);
     //     this.seedShelf.next([...this.mySeeds]);
@@ -99,4 +114,4 @@ removeSeedFromShelf(seed:Seed) {
   // }
 
 
-}
+
