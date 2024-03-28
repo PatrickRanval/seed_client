@@ -58,6 +58,19 @@ export class SeedApiService {
     return res
   }
 
+  removeSeed(seedUid:number){
+    //INCONSISTENT BEHAVIOR HERE
+    //INCONSISTENT BEHAVIOR HERE
+    //INCONSISTENT BEHAVIOR HERE
+
+    let id = this.userService.getUserId();
+    let res = this.http.delete<any>(`${environment.apiUrl}/users/${id}/user_varieties/${seedUid}`)
+    .pipe(
+      catchError(this.handleError)
+    );
+    return res
+  }
+
   getTrays(): Observable<any> {
     let res = this.http.get<any>(`${environment.apiUrl}/trays`)
     .pipe(

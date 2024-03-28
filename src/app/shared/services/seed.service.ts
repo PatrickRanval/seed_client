@@ -69,14 +69,22 @@ addSeedToShelf (seed:Seed) {
   }
 
 removeSeedFromShelf(seed:Seed) {
-  const index = this.mySeeds.findIndex(item => item === seed);
-  // If the seed is found, remove it from the array
-  if (index !== -1) {
-    this.mySeeds.splice(index, 1);
-    // Emit the updated array using the BehaviorSubject
-    this.seedShelf.next([...this.mySeeds]);
-  }
+  let seedUid = seed.uid || 0;
+  this.seedApiService.removeSeed(seedUid).subscribe(() => {
+    this.fetchSeeds().subscribe({
+      next: (seed) => this.populateShelf(seed),
+      error: (error) => console.error('Error fetching seed:', error)
+    });
+    });
+
+  // const index = this.mySeeds.findIndex(item => item === seed);
+  // // If the seed is found, remove it from the array
+  // if (index !== -1) {
+  //   this.mySeeds.splice(index, 1);
+  //   // Emit the updated array using the BehaviorSubject
+  //   this.seedShelf.next([...this.mySeeds]);
 }
+
 
 sendSeedToDB(seed: Seed) {
   const seedDataToRails = {
