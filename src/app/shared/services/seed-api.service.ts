@@ -43,14 +43,18 @@ export class SeedApiService {
     return res;
   }
 
-  sendSeed(seedDataToRails:any) {
-    //CONSTRUCTION ZONE
+  sendSeed(seedDataToRails:any): Observable<any> {
+    //ALWAYS SUBSCRIBE TO THE OBSERVABLE
+    //ALWAYS SUBSCRIBE TO THE OBSERVABLE
+    //ALWAYS SUBSCRIBE TO THE OBSERVABLE
+    //ALWAYS SUBSCRIBE TO THE OBSERVABLE
+    //ALWAYS SUBSCRIBE TO THE OBSERVABLE
     let id = this.userService.getUserId();
-    const res = this.http.post(`${environment.apiUrl}/users/${id}/user_varieties`, { seedDataToRails })
+    console.log(`payload to send`, seedDataToRails);
+    let res = this.http.post<any>(`${environment.apiUrl}/users/${id}/user_varieties`, seedDataToRails)
     .pipe(
       catchError(this.handleError)
     );
-    console.log(`Response Data sendSeed():`, res);
     return res
   }
 

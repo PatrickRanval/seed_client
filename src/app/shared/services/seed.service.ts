@@ -26,6 +26,7 @@ export class SeedService {
   }
 
   fetchSeeds(): Observable<Seed[]> {
+    this.mySeeds = [];
     console.log('seed.service has called fetchSeed()');
     return this.seedApiService.getSeeds().pipe(
       map((data: any[]) => {
@@ -83,11 +84,12 @@ sendSeedToDB(seed: Seed) {
     variety_name: seed.variety
   };
 
-  this.seedApiService.sendSeed(seedDataToRails);
-
-  // .pipe(
-  //   switchMap(() => this.fetchSeeds())
-  // );
+  this.seedApiService.sendSeed(seedDataToRails).subscribe(() => {
+  this.fetchSeeds().subscribe({
+    next: (seed) => this.populateShelf(seed),
+    error: (error) => console.error('Error fetching seed:', error)
+  });
+  });
 }
 
 }
