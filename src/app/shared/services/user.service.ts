@@ -13,7 +13,7 @@ export class UserService {
   public userId:number | null = null;
 
   public currentUserSubject: BehaviorSubject<User | null> = new BehaviorSubject<User | null>(null);
-  public currentUser$: Observable<User | null> = this.currentUserSubject.asObservable();
+  // public currentUser$: Observable<User | null> = this.currentUserSubject.asObservable();
 
   constructor() {}
 
@@ -39,7 +39,11 @@ export class UserService {
   }
 
   getUserId(){
-    return this.userId;
+    if (this.userId)  {
+      return this.userId;
+    } else {
+      return 0;
+    }
   }
 
   logout(){

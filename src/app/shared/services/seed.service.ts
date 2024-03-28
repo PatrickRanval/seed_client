@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Seed } from '../models/seed.model';
 import { SeedApiService } from './seed-api.service';
-import { Subject, Observable, map, BehaviorSubject, catchError, throwError } from 'rxjs';
+import { Subject, Observable, map, BehaviorSubject, catchError, throwError, tap, pipe, switchMap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -77,17 +77,17 @@ removeSeedFromShelf(seed:Seed) {
   }
 }
 
-sendSeedToDB(seed:Seed){
-  //Uhhh.... not sure about the organization here.
-
+sendSeedToDB(seed: Seed) {
   const seedDataToRails = {
     type_name: seed.type,
     variety_name: seed.variety
-  }
+  };
 
-this.seedApiService.sendSeed(seedDataToRails);
+  this.seedApiService.sendSeed(seedDataToRails);
 
-
+  // .pipe(
+  //   switchMap(() => this.fetchSeeds())
+  // );
 }
 
 }

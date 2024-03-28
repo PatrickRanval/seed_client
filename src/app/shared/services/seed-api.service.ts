@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { UserService } from './user.service';
 import { Seed } from '../models/seed.model';
+import { map } from 'rxjs';
 
 
 @Injectable({
@@ -11,7 +12,7 @@ import { Seed } from '../models/seed.model';
 })
 export class SeedApiService {
 
-  constructor(private http:HttpClient, private userService:UserService) { }
+  constructor(private http:HttpClient, private userService:UserService) {}
 
   //I thought this was funny at the time, but it's the dumbest named method.
   getSignedUp(signupDataForRails:any) {
@@ -31,12 +32,9 @@ export class SeedApiService {
     return token;
   }
 
-  getSeeds(): Observable<any> {
-    let id = this.userService.getUserId()
-    if (!id) {;
-      return throwError(() => new Error('Missing id parameter'));
-    }
 
+  getSeeds(): Observable<any> {
+    let id = this.userService.getUserId();
     const res = this.http.get<any>(`${environment.apiUrl}/users/${id}/user_varieties`)
       .pipe(
         catchError(this.handleError)
@@ -46,14 +44,14 @@ export class SeedApiService {
   }
 
   sendSeed(seedDataToRails:any) {
-    //START HERE::
-
-    //okay, so this needs to add the seed by type_name, variety_name
-    //this adds variety to varieties table OR matches it to an existing record
-    //then we need to call a method to add that record to user_varieties
-
-
-    this.http.post(`${environment.apiUrl}/varieties`, { seedDataToRails });
+    //CONSTRUCTION ZONE
+    let id = this.userService.getUserId();
+    const res = this.http.post(`${environment.apiUrl}/users/${id}/user_varieties`, { seedDataToRails })
+    .pipe(
+      catchError(this.handleError)
+    );
+    console.log(`Response Data sendSeed():`, res);
+    return res
   }
 
   getTrays(): Observable<any> {

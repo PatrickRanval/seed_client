@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Seed } from '../shared/models/seed.model';
 import { SeedService } from '../shared/services/seed.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { UserService } from '../shared/services/user.service';
 import { Subscription } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -19,7 +19,7 @@ export class SeedShelfComponent {
   private seedShelfSubscription!: Subscription;
   private seedSelectedSubscription!: Subscription;
 
-  constructor(private seedService: SeedService) {}
+  constructor(private seedService: SeedService, private userService:UserService) {}
 
   //Not sure about this:
   type:string = '';
@@ -47,13 +47,13 @@ export class SeedShelfComponent {
     this.seedService.setSelectedSeed(seed);
   }
 
-  onCreateSeed(){
-    //We need some thinky work on how to implement this. The null solution is lazy.
-    let seed = new Seed(null, this.type, this.variety)
-    this.seedService.addSeedToShelf(seed)
+  onCreateSeed() {
+    const seed = new Seed(null, this.type, this.variety);
+
+    this.seedService.sendSeedToDB(seed);
     this.type = '';
     this.variety = '';
-  }
+}
 
   onRemoveSeed(seed:Seed) {
    this.seedService.removeSeedFromShelf(seed);
