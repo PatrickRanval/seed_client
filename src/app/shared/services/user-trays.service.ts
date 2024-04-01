@@ -11,7 +11,7 @@ export class UserTraysService {
 
   constructor(private seedApiService:SeedApiService) { }
 
-  defaultTray = new Tray("Default 128", 8, 16)
+  defaultTray = new Tray(null, "Default 128", 8, 16)
   private availableUserTrays:Tray[] = [this.defaultTray];
 
   userTraySelected = new BehaviorSubject<Tray | null>(this.defaultTray);
@@ -35,8 +35,18 @@ export class UserTraysService {
     //This method takes the gridValues from userTraySelected and maps it to the display
   }
 
-  packUserTray() {
-    //this method logically exists, but is likely unnecessary
+  sendTrayToDB(tray:Tray) {
+    const trayObject = {
+      //id refers to :user_tray_id
+      id: tray.uid,
+      //seed map to be a TEXT representing Seed[]
+      seed_map: tray.gridValues.map(row => row.map(seed => JSON.stringify(seed)))
+    };
+
+
+    //MORE WORK HERE:
+
+
   }
 
   saveUserTray(tray: Tray) {

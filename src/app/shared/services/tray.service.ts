@@ -39,6 +39,7 @@ export class TrayService {
         // Map the array of data to an array of Tray objects
         const trays: Tray[] = data.map(trayData => {
           return new Tray(
+            null,
             trayData.name,
             trayData.cells_short,
             trayData.cells_long
