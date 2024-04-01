@@ -37,8 +37,8 @@ export class SeedService {
           return new Seed(
             //seedData.id is the user_variety reference
             seedData.id,
-            seedData.variety.name,
-            seedData.variety.type.name
+            seedData.variety.type.name,
+            seedData.variety.name
           );
         });
         return seeds; // Return the array of seeds to the subscriber
