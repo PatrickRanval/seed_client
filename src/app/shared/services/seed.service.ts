@@ -35,7 +35,8 @@ export class SeedService {
         // Map the array of data to an array of Seed objects
         const seeds: Seed[] = data.map(seedData => {
           return new Seed(
-            seedData.variety.id,
+            //seedData.id is the user_variety reference
+            seedData.id,
             seedData.variety.name,
             seedData.variety.type.name
           );
