@@ -42,7 +42,4 @@ export class UserTraysComponent {
     }
   }
 
-  // toggleHide(){
-  //   this.hide = !this.hide;
-  // }
 }

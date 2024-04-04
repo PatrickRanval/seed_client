@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Seed } from '../models/seed.model';
 import { SeedApiService } from './seed-api.service';
-import { Subject, Observable, map, BehaviorSubject, catchError, throwError, tap, pipe, switchMap } from 'rxjs';
+import { Subject, Observable, map, BehaviorSubject, catchError, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'

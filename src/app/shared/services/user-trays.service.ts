@@ -35,26 +35,13 @@ export class UserTraysService {
     //This method takes the gridValues from userTraySelected and maps it to the display
   }
 
-  sendTrayToDB(tray:Tray) {
-    const trayObject = {
-      //id refers to :user_tray_id
-      id: tray.uid,
-      //seed map to be a TEXT representing Seed[]
-      seed_map: tray.gridValues.map(row => row.map(seed => JSON.stringify(seed)))
-    };
-
-
-    //MORE WORK HERE:
-
-
-  }
 
   saveUserTray(tray: Tray) {
     // This method takes the userTraySelected in its current state and sends it to the database.
     // This method should prevent saving empty trays.
 
     // Check if the tray already exists in availableUserTrays
-      const index = this.availableUserTrays.indexOf(tray)
+    const index = this.availableUserTrays.indexOf(tray)
 
     if (index !== -1) {
         // Tray already exists, update it
@@ -67,8 +54,30 @@ export class UserTraysService {
     this.userTrayShelf.next(this.availableUserTrays);
 
     // Now that availableUserTrays is updated, you may want to send it to the database
-    this.seedApiService.postUserTrays();
+    this.sendTrayToDB(tray);
 }
+
+sendTrayToDB(tray:Tray) {
+
+  let userTrayObject = {
+    //tray.uid is referring to :user_tray_id
+    user_tray_id: tray.uid,
+    //appending tray_name to match to tray_id in database
+    tray_name: tray.trayName,
+    //seed map to be a TEXT representing Seed[]
+    seed_map: tray.gridValues.flatMap(row => row.map(seed => JSON.stringify(seed))).join(',')
+  };
+  console.log(userTrayObject);
+  this.seedApiService.createOrUpdateUserTray(userTrayObject, tray.uid).subscribe(() => {
+    // this.fetchUserTrays().subscribe({
+    //   next: (tray) => this.populateShelf(tray),
+    //   error: (error) => console.error('Error fetching seed:', error)
+    // });
+    console.log('SUCCESS user-tray.service sendSeedToDB')
+    });
+  //MORE WORK HERE???:
+}
+
 
   //I think it is possible or even likely that all tray rendering logic winds up in user-tray.service (which would move initialize grid from tray.service to user_tray.service)
 
@@ -79,7 +88,7 @@ export class UserTraysService {
 
   populateGrid(tray: Tray): void {
     for (let i = 0; i < tray.cellsShort; i++) {
-        if (!tray.gridValues[i]) {
+      if (!tray.gridValues[i]) {
             tray.gridValues[i] = []; // Initialize the row only if it hasn't been initialized yet
         }
 

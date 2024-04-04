@@ -86,10 +86,23 @@ export class SeedApiService {
       //This method is index host/:user/user_trays for currentUser
   }
 
-  postUserTrays(){
-    console.log("Build saveUserTrays()")
-      //This method is post host/:user/user_trays for currentUser
-      //Question around whether this should rewrite everything every time or just target specific user_tray each time
+  createOrUpdateUserTray(userTrayDataToRails:any, trayId:number | null): Observable<any> {
+
+    let id = this.userService.getUserId();
+    if(!trayId) {
+
+    let res = this.http.post<any>(`${environment.apiUrl}/users/${id}/user_trays`, userTrayDataToRails)
+    .pipe(
+      catchError(this.handleError)
+    );
+    return res
+    } else {
+      let res = this.http.put<any>(`${environment.apiUrl}/users/${id}/user_trays/${trayId}`, userTrayDataToRails)
+      .pipe(
+        catchError(this.handleError)
+      );
+      return res
+    }
   }
 
 
