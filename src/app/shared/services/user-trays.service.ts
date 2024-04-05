@@ -128,7 +128,7 @@ export class UserTraysService {
     }
   }
 
-  parseGrid(seedMapString: string | null, cellsShort: number, cellsLong: number): Seed[][] {
+  parseGrid(seedMapString: any, cellsShort: number, cellsLong: number): Seed[][] {
     // Initialize gridValues with correct type information
     let gridValues: Seed[][] = [];
 
@@ -175,14 +175,14 @@ export class UserTraysService {
     return gridValues;
   }
 
-  seedReviver(key: any, value: any): Seed {
-    // Check if the value is an object with properties matching Seed class
-    if (typeof value === 'object' && value !== null && 'type' in value && 'variety' in value) {
-      // Reconstruct a Seed object using the properties from the JSON data
-      return new Seed(value.uid, value.type, value.variety);
+  seedReviver(key: any, value: any): any {
+    // Check if the value is an array of objects with properties matching Seed class
+    if (Array.isArray(value) && value.every(obj => typeof obj === 'object' && obj !== null && 'type' in obj && 'variety' in obj)) {
+        // Reconstruct an array of Seed objects using the properties from the JSON data
+        return value.map(obj => new Seed(obj.uid, obj.type, obj.variety));
     }
-    // Return the original value if it doesn't match Seed properties
-    return new Seed(0, '', '');
-  }
+    // Return the original value if it doesn't match the expected format
+    return value;
+}
 
 }
