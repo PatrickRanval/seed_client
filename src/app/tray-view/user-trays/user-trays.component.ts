@@ -32,6 +32,12 @@ export class UserTraysComponent {
     this.userTrayService.setSelectedUserTray(tray)
   }
 
+  onFetchUserTrays() {
+    this.userTrayService.fetchUserTrays().subscribe({
+      next: (userTrays) => this.userTrayService.populateShelf(userTrays),
+      error: (error) => console.error('Error fetching seed:', error)
+    });
+  }
 
   ngOnDestroy(): void {
     if (this.userTraySubscription) {

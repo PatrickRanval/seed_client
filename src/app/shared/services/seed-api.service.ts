@@ -82,8 +82,13 @@ export class SeedApiService {
 
 
   getUserTrays(){
-    console.log("Build getUserTrays()")
-      //This method is index host/:user/user_trays for currentUser
+    let id = this.userService.getUserId();
+    let res = this.http.get<any>(`${environment.apiUrl}/users/${id}/user_trays`)
+    .pipe(
+      catchError(this.handleError)
+    );
+  console.log(`Response Data:`, res);
+  return res;
   }
 
   createOrUpdateUserTray(userTrayDataToRails:any, trayId:number | null): Observable<any> {

@@ -1,4 +1,5 @@
 <h4>Your Planted Trays:</h4>
+<button (click)="onFetchUserTrays()">DEBUG GET TRAYS</button>
 <div class="container">
   @for (tray of availableUserTrays; track $index) {
   <div class="tray-item" (click)="onSelectTray(tray)">

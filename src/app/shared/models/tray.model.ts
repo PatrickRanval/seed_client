@@ -7,12 +7,12 @@ export class Tray {
   public cellsLong: number;
   public gridValues: Seed[][];
 
-  constructor(uid: number | null, trayName:string, cellsShort: number, cellsLong: number) {
+  constructor(uid: number | null, trayName:string, cellsShort: number, cellsLong: number, gridValues: Seed[][] = [] ) {
     this.uid = uid;
     this.trayName = trayName;
     this.cellsShort = cellsShort;
     this.cellsLong = cellsLong;
-    this.gridValues = [];
+    this.gridValues = gridValues;
   }
 
 }

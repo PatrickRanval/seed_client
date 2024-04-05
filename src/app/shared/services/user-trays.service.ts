@@ -2,20 +2,28 @@ import { Injectable } from '@angular/core';
 import { SeedApiService } from './seed-api.service';
 import { Tray } from '../models/tray.model';
 import { Seed } from '../models/seed.model';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable, catchError, throwError, map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserTraysService {
 
-  constructor(private seedApiService:SeedApiService) { }
-
   defaultTray = new Tray(null, "Default 128", 8, 16)
-  private availableUserTrays:Tray[] = [this.defaultTray];
+  private myUserTrays:Tray[] = [this.defaultTray];
 
   userTraySelected = new BehaviorSubject<Tray | null>(this.defaultTray);
-  userTrayShelf = new BehaviorSubject<Tray[] | null>(this.availableUserTrays);
+  userTrayShelf = new BehaviorSubject<Tray[] | null>(this.myUserTrays);
+
+  constructor(private seedApiService:SeedApiService) {
+
+    // this.fetchUserTrays().subscribe({
+    //   next: (userTrays) => this.populateShelf(userTrays),
+    //   error: (error) => console.error('Error fetching seed:', error)
+    // });
+
+  }
+
 
 
 
@@ -26,9 +34,31 @@ export class UserTraysService {
   //user-trays will be invoked within the tray component
 
 
-  fetchUserTrays(){
+  fetchUserTrays(): Observable<Tray[]> {
+    this.myUserTrays = [];
+    return this.seedApiService.getUserTrays().pipe(
+      map((data: any[]) => {
+        // Map the array of data to an array of Tray objects
+        const trays: Tray[] = data.map(trayData => {
+          debugger
+          return new Tray(
+            //THIS NEEDS WORK
+            //DATA FROM
+            trayData.id,
+            trayData.tray.name,
+            trayData.tray.cellsShort,
+            trayData.tray.cellsLong,
+            this.parseGrid(trayData.seed_map, trayData.tray.cellsShort, trayData.tray.cellsLong)
+          );
+      });
+      return trays;
+    }),
+      catchError((error) => {
+        console.error('Error fetching seeds:', error);
+        return throwError(() => error); // Re-throw the error
+      }))
     //This method gets all the user_trays and sets userTraySelected to the .last value of the array
-    this.seedApiService.getUserTrays();
+
   }
 
   unpackUserTray(){
@@ -40,20 +70,20 @@ export class UserTraysService {
     // This method takes the userTraySelected in its current state and sends it to the database.
     // This method should prevent saving empty trays.
 
-    // Check if the tray already exists in availableUserTrays
-    const index = this.availableUserTrays.indexOf(tray)
+    // Check if the tray already exists in myUserTrays
+    const index = this.myUserTrays.indexOf(tray)
 
     if (index !== -1) {
         // Tray already exists, update it
-        this.availableUserTrays[index] = tray;
+        this.myUserTrays[index] = tray;
     } else {
         // Tray doesn't exist, add it to the array
-        this.availableUserTrays.push(tray);
+        this.myUserTrays.push(tray);
     }
     //broadcast updated array
-    this.userTrayShelf.next(this.availableUserTrays);
+    this.userTrayShelf.next(this.myUserTrays);
 
-    // Now that availableUserTrays is updated, you may want to send it to the database
+    // Now that myUserTrays is updated, you may want to send it to the database
     this.sendTrayToDB(tray);
 }
 
@@ -78,6 +108,10 @@ sendTrayToDB(tray:Tray) {
   //MORE WORK HERE???:
 }
 
+populateShelf (userTrays:Tray[]) {
+  this.myUserTrays.push(...userTrays);
+  this.userTrayShelf.next([...this.myUserTrays]);
+}
 
   //I think it is possible or even likely that all tray rendering logic winds up in user-tray.service (which would move initialize grid from tray.service to user_tray.service)
 
@@ -99,4 +133,47 @@ sendTrayToDB(tray:Tray) {
         }
     }
 }
+
+parseGrid(seedMapString: string, cellsShort: number, cellsLong: number): Seed[][] {
+  // Initialize gridValues with correct type information
+  let gridValues: Seed[][] = [];
+
+  // Parse the seed_map string into an array of Seed objects
+  const seedMap: Seed[] = seedMapString.split(',').map(seedString => JSON.parse(seedString, this.seedReviver));
+
+  // Initialize index for accessing seeds from seedMap
+  let seedIndex = 0;
+
+  // Iterate over rows
+  for (let i = 0; i < cellsShort; i++) {
+    // Initialize row
+    gridValues[i] = [];
+
+    // Iterate over columns
+    for (let j = 0; j < cellsLong; j++) {
+      // Check if there are more seeds in the seedMap
+      if (seedIndex < seedMap.length) {
+        // Assign seed from seedMap to grid position
+        gridValues[i][j] = seedMap[seedIndex];
+        seedIndex++;
+      } else {
+        // If no more seeds, initialize with default seed
+        gridValues[i][j] = new Seed(0, '', '');
+      }
+    }
+  }
+
+  return gridValues;
+}
+
+seedReviver(key: any, value: any): Seed {
+  // Check if the value is an object with properties matching Seed class
+  if (typeof value === 'object' && value !== null && 'type' in value && 'variety' in value && 'displayColor' in value) {
+    // Reconstruct a Seed object using the properties from the JSON data
+    return new Seed(value.uid, value.type, value.variety);
+  }
+  // Return the original value if it doesn't match Seed properties
+  return new Seed(0, '', '');
+}
+
 }

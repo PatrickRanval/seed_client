@@ -16,10 +16,9 @@ export class SeedService {
 
   constructor(private seedApiService: SeedApiService) {
 
-    //Does this need ngOnInit? No problems yet... unsubscribe...???
 
     this.fetchSeeds().subscribe({
-      next: (seed) => this.populateShelf(seed),
+      next: (seeds) => this.populateShelf(seeds),
       error: (error) => console.error('Error fetching seed:', error)
     });
 
