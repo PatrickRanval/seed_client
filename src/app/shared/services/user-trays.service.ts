@@ -16,10 +16,10 @@ export class UserTraysService {
   userTrayShelf = new BehaviorSubject<Tray[] | null>(this.myUserTrays);
 
   constructor(private seedApiService: SeedApiService) {
-    // this.fetchUserTrays().subscribe({
-    //   next: (userTrays) => this.populateShelf(userTrays),
-    //   error: (error) => console.error('Error fetching seed:', error)
-    // });
+    this.fetchUserTrays().subscribe({
+      next: (userTrays) => this.populateShelf(userTrays),
+      error: (error) => console.error('Error fetching seed:', error)
+    });
   }
 
   // SCOPE:
@@ -34,7 +34,6 @@ export class UserTraysService {
       map((data: any[]) => {
         // Map the array of data to an array of Tray objects
         const trays: Tray[] = data.map(trayData => {
-          debugger
           return new Tray(
             // THIS NEEDS WORK
             // DATA FROM
@@ -93,10 +92,10 @@ export class UserTraysService {
     };
     console.log(userTrayObject);
     this.seedApiService.createOrUpdateUserTray(userTrayObject, tray.uid).subscribe(() => {
-      // this.fetchUserTrays().subscribe({
-      //   next: (tray) => this.populateShelf(tray),
-      //   error: (error) => console.error('Error fetching seed:', error)
-      // });
+      this.fetchUserTrays().subscribe({
+        next: (tray) => this.populateShelf(tray),
+        error: (error) => console.error('Error fetching seed:', error)
+      });
       console.log('SUCCESS user-tray.service sendSeedToDB')
     });
     // MORE WORK HERE???:
@@ -134,9 +133,8 @@ export class UserTraysService {
 
     // Check if seedMapString is null
     if (seedMapString !== null) {
+      //This was absolutely silly complicated
       const seedMap: Seed[] = JSON.parse(seedMapString, this.seedReviver);
-      // Parse the seed_map string into an array of Seed objects
-      // const seedMap: Seed[] = seedMapString.split(',').map(seedString => JSON.parse(seedString, this.seedReviver));
 
       // Initialize index for accessing seeds from seedMap
       let seedIndex = 0;
