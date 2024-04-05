@@ -9,30 +9,24 @@ import { BehaviorSubject, Observable, catchError, throwError, map } from 'rxjs';
 })
 export class UserTraysService {
 
-  defaultTray = new Tray(null, "Default 128", 8, 16)
-  private myUserTrays:Tray[] = [this.defaultTray];
+  defaultTray = new Tray(null, "Default 128", 8, 16);
+  private myUserTrays: Tray[] = [this.defaultTray];
 
   userTraySelected = new BehaviorSubject<Tray | null>(this.defaultTray);
   userTrayShelf = new BehaviorSubject<Tray[] | null>(this.myUserTrays);
 
-  constructor(private seedApiService:SeedApiService) {
-
+  constructor(private seedApiService: SeedApiService) {
     // this.fetchUserTrays().subscribe({
     //   next: (userTrays) => this.populateShelf(userTrays),
     //   error: (error) => console.error('Error fetching seed:', error)
     // });
-
   }
 
+  // SCOPE:
 
-
-
-  //SCOPE:
-
-  //user-trays needs to be able to map generic trays and populate their gridValues
-  //user-trays will save these mapped generic trays as unique objects associated with the user
-  //user-trays will be invoked within the tray component
-
+  // user-trays needs to be able to map generic trays and populate their gridValues
+  // user-trays will save these mapped generic trays as unique objects associated with the user
+  // user-trays will be invoked within the tray component
 
   fetchUserTrays(): Observable<Tray[]> {
     this.myUserTrays = [];
@@ -42,29 +36,28 @@ export class UserTraysService {
         const trays: Tray[] = data.map(trayData => {
           debugger
           return new Tray(
-            //THIS NEEDS WORK
-            //DATA FROM
+            // THIS NEEDS WORK
+            // DATA FROM
             trayData.id,
             trayData.tray.name,
-            trayData.tray.cellsShort,
-            trayData.tray.cellsLong,
-            this.parseGrid(trayData.seed_map, trayData.tray.cellsShort, trayData.tray.cellsLong)
+            trayData.tray.cells_short,
+            trayData.tray.cells_long,
+            this.parseGrid(trayData.seed_map, trayData.tray.cells_short, trayData.tray.cells_long)
           );
-      });
-      return trays;
-    }),
+        });
+        return trays;
+      }),
       catchError((error) => {
         console.error('Error fetching seeds:', error);
         return throwError(() => error); // Re-throw the error
-      }))
-    //This method gets all the user_trays and sets userTraySelected to the .last value of the array
-
+      })
+    );
+    // This method gets all the user_trays and sets userTraySelected to the .last value of the array
   }
 
-  unpackUserTray(){
-    //This method takes the gridValues from userTraySelected and maps it to the display
+  unpackUserTray() {
+    // This method takes the gridValues from userTraySelected and maps it to the display
   }
-
 
   saveUserTray(tray: Tray) {
     // This method takes the userTraySelected in its current state and sends it to the database.
@@ -74,48 +67,49 @@ export class UserTraysService {
     const index = this.myUserTrays.indexOf(tray)
 
     if (index !== -1) {
-        // Tray already exists, update it
-        this.myUserTrays[index] = tray;
+      // Tray already exists, update it
+      this.myUserTrays[index] = tray;
     } else {
-        // Tray doesn't exist, add it to the array
-        this.myUserTrays.push(tray);
+      // Tray doesn't exist, add it to the array
+      this.myUserTrays.push(tray);
     }
-    //broadcast updated array
+    // Broadcast updated array
     this.userTrayShelf.next(this.myUserTrays);
 
     // Now that myUserTrays is updated, you may want to send it to the database
     this.sendTrayToDB(tray);
-}
+  }
 
-sendTrayToDB(tray:Tray) {
+  sendTrayToDB(tray: Tray) {
 
-  let userTrayObject = {
-    //tray.uid is referring to :user_tray_id
-    user_tray_id: tray.uid,
-    //appending tray_name to match to tray_id in database
-    tray_name: tray.trayName,
-    //seed map to be a TEXT representing Seed[]
-    seed_map: tray.gridValues.flatMap(row => row.map(seed => JSON.stringify(seed))).join(',')
-  };
-  console.log(userTrayObject);
-  this.seedApiService.createOrUpdateUserTray(userTrayObject, tray.uid).subscribe(() => {
-    // this.fetchUserTrays().subscribe({
-    //   next: (tray) => this.populateShelf(tray),
-    //   error: (error) => console.error('Error fetching seed:', error)
-    // });
-    console.log('SUCCESS user-tray.service sendSeedToDB')
+    let userTrayObject = {
+      // tray.uid is referring to :user_tray_id
+      user_tray_id: tray.uid,
+      // appending tray_name to match to tray_id in database
+      tray_name: tray.trayName,
+      // seed map to be a TEXT representing Seed[]
+      // square bracketing everything is an experimental solution
+      seed_map: JSON.stringify(tray.gridValues.flatMap(row => row))
+    };
+    console.log(userTrayObject);
+    this.seedApiService.createOrUpdateUserTray(userTrayObject, tray.uid).subscribe(() => {
+      // this.fetchUserTrays().subscribe({
+      //   next: (tray) => this.populateShelf(tray),
+      //   error: (error) => console.error('Error fetching seed:', error)
+      // });
+      console.log('SUCCESS user-tray.service sendSeedToDB')
     });
-  //MORE WORK HERE???:
-}
+    // MORE WORK HERE???:
+  }
 
-populateShelf (userTrays:Tray[]) {
-  this.myUserTrays.push(...userTrays);
-  this.userTrayShelf.next([...this.myUserTrays]);
-}
+  populateShelf(userTrays: Tray[]) {
+    this.myUserTrays.push(...userTrays);
+    this.userTrayShelf.next([...this.myUserTrays]);
+  }
 
-  //I think it is possible or even likely that all tray rendering logic winds up in user-tray.service (which would move initialize grid from tray.service to user_tray.service)
+  // I think it is possible or even likely that all tray rendering logic winds up in user-tray.service (which would move initialize grid from tray.service to user_tray.service)
 
-  setSelectedUserTray(tray:any){
+  setSelectedUserTray(tray: any) {
     this.populateGrid(tray);
     this.userTraySelected.next(tray);
   }
@@ -123,57 +117,72 @@ populateShelf (userTrays:Tray[]) {
   populateGrid(tray: Tray): void {
     for (let i = 0; i < tray.cellsShort; i++) {
       if (!tray.gridValues[i]) {
-            tray.gridValues[i] = []; // Initialize the row only if it hasn't been initialized yet
+        tray.gridValues[i] = []; // Initialize the row only if it hasn't been initialized yet
+      }
+
+      for (let j = 0; j < tray.cellsLong; j++) {
+        if (!tray.gridValues[i][j]) {
+          tray.gridValues[i][j] = new Seed(0, '', ''); // Initialize a new seed only if the cell is empty
         }
-
-        for (let j = 0; j < tray.cellsLong; j++) {
-            if (!tray.gridValues[i][j]) {
-                tray.gridValues[i][j] = new Seed(0, '', ''); // Initialize a new seed only if the cell is empty
-            }
-        }
-    }
-}
-
-parseGrid(seedMapString: string, cellsShort: number, cellsLong: number): Seed[][] {
-  // Initialize gridValues with correct type information
-  let gridValues: Seed[][] = [];
-
-  // Parse the seed_map string into an array of Seed objects
-  const seedMap: Seed[] = seedMapString.split(',').map(seedString => JSON.parse(seedString, this.seedReviver));
-
-  // Initialize index for accessing seeds from seedMap
-  let seedIndex = 0;
-
-  // Iterate over rows
-  for (let i = 0; i < cellsShort; i++) {
-    // Initialize row
-    gridValues[i] = [];
-
-    // Iterate over columns
-    for (let j = 0; j < cellsLong; j++) {
-      // Check if there are more seeds in the seedMap
-      if (seedIndex < seedMap.length) {
-        // Assign seed from seedMap to grid position
-        gridValues[i][j] = seedMap[seedIndex];
-        seedIndex++;
-      } else {
-        // If no more seeds, initialize with default seed
-        gridValues[i][j] = new Seed(0, '', '');
       }
     }
   }
 
-  return gridValues;
-}
+  parseGrid(seedMapString: string | null, cellsShort: number, cellsLong: number): Seed[][] {
+    // Initialize gridValues with correct type information
+    let gridValues: Seed[][] = [];
 
-seedReviver(key: any, value: any): Seed {
-  // Check if the value is an object with properties matching Seed class
-  if (typeof value === 'object' && value !== null && 'type' in value && 'variety' in value && 'displayColor' in value) {
-    // Reconstruct a Seed object using the properties from the JSON data
-    return new Seed(value.uid, value.type, value.variety);
+    // Check if seedMapString is null
+    if (seedMapString !== null) {
+      const seedMap: Seed[] = JSON.parse(seedMapString, this.seedReviver);
+      // Parse the seed_map string into an array of Seed objects
+      // const seedMap: Seed[] = seedMapString.split(',').map(seedString => JSON.parse(seedString, this.seedReviver));
+
+      // Initialize index for accessing seeds from seedMap
+      let seedIndex = 0;
+
+      // Iterate over rows
+      for (let i = 0; i < cellsShort; i++) {
+        // Initialize row
+        gridValues[i] = [];
+
+        // Iterate over columns
+        for (let j = 0; j < cellsLong; j++) {
+          // Check if there are more seeds in the seedMap
+          if (seedIndex < seedMap.length) {
+            // Assign seed from seedMap to grid position
+            gridValues[i][j] = seedMap[seedIndex];
+            seedIndex++;
+          } else {
+            // If no more seeds, initialize with default seed
+            gridValues[i][j] = new Seed(0, '', '');
+          }
+        }
+      }
+    } else {
+      // If seedMapString is null, populate the grid with default seeds
+      for (let i = 0; i < cellsShort; i++) {
+        // Initialize row
+        gridValues[i] = [];
+
+        // Populate row with default seeds
+        for (let j = 0; j < cellsLong; j++) {
+          gridValues[i][j] = new Seed(0, '', '');
+        }
+      }
+    }
+
+    return gridValues;
   }
-  // Return the original value if it doesn't match Seed properties
-  return new Seed(0, '', '');
-}
+
+  seedReviver(key: any, value: any): Seed {
+    // Check if the value is an object with properties matching Seed class
+    if (typeof value === 'object' && value !== null && 'type' in value && 'variety' in value) {
+      // Reconstruct a Seed object using the properties from the JSON data
+      return new Seed(value.uid, value.type, value.variety);
+    }
+    // Return the original value if it doesn't match Seed properties
+    return new Seed(0, '', '');
+  }
 
 }
