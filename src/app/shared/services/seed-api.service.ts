@@ -3,6 +3,7 @@ import { Observable, catchError, throwError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { UserService } from './user.service';
+import { Tray } from '../models/tray.model';
 import { Seed } from '../models/seed.model';
 import { map } from 'rxjs';
 
@@ -108,6 +109,16 @@ export class SeedApiService {
       );
       return res
     }
+  }
+
+  removeUserTray(tray:Tray) {
+    let id = this.userService.getUserId();
+
+    let res = this.http.delete<any>(`${environment.apiUrl}/users/${id}/user_trays/${tray.uid}`)
+    .pipe(
+      catchError(this.handleError)
+    );
+    return res
   }
 
 

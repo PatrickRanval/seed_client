@@ -29,13 +29,18 @@ export class UserTraysComponent {
   }
 
   onSelectTray(tray:Tray) {
-    this.userTrayService.setSelectedUserTray(tray)
+    this.userTrayService.setSelectedUserTray(tray);
+  }
+
+  onRemove(tray:Tray) {
+    this.userTrayService.onDeleteUserTray(tray);
+    this.userTrayService.userTraySelected.next(null);
   }
 
   onFetchUserTrays() {
     this.userTrayService.fetchUserTrays().subscribe({
       next: (userTrays) => this.userTrayService.populateShelf(userTrays),
-      error: (error) => console.error('Error fetching seed:', error)
+      error: (error) => console.error('Error fetching User Trays:', error)
     });
   }
 

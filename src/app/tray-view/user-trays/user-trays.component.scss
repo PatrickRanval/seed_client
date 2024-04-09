@@ -1,5 +1,12 @@
 .container {
   display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+}
+
+.container .info {
+  font-size: 0.75em;
 }
 
 .tray-item {
@@ -26,10 +33,6 @@
   background-color: var(--trayPurp);
 }
 
-.tray-item .info {
-  text-align: center;
-  margin-top: 1em; /* Adjust margin */
-}
 
 .tray-item .tray-name {
   font-weight: bold;
@@ -37,4 +40,16 @@
 
 .tray-item .cell-count {
   font-size: 0.8em; /* Adjust font size */
+}
+
+.row-element {
+  display: flex;
+  flex-direction: row; /* Display as row */
+  justify-content: space-between; /* Adjust as needed */
+  align-items: center; /* Adjust as needed */
+}
+
+.btn-space-left {
+  position: relative;
+  margin-left: 0.5em;
 }

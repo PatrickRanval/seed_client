@@ -9,7 +9,7 @@ import { BehaviorSubject, Observable, catchError, throwError, map } from 'rxjs';
 })
 export class UserTraysService {
 
-  defaultTray = new Tray(null, "Default 128", 8, 16);
+  defaultTray = new Tray(null, "Default 128", 8, 16, null);
   private myUserTrays: Tray[] = [this.defaultTray];
 
   userTraySelected = new BehaviorSubject<Tray | null>(this.defaultTray);
@@ -34,16 +34,18 @@ export class UserTraysService {
       map((data: any[]) => {
         // Map the array of data to an array of Tray objects
         const trays: Tray[] = data.map(trayData => {
-          return new Tray(
+            return new Tray(
             // THIS NEEDS WORK
             // DATA FROM
             trayData.id,
             trayData.tray.name,
             trayData.tray.cells_short,
             trayData.tray.cells_long,
+            new Date(trayData.created_at),
             this.parseGrid(trayData.seed_map, trayData.tray.cells_short, trayData.tray.cells_long)
           );
         });
+        debugger
         return trays;
       }),
       catchError((error) => {
@@ -51,7 +53,7 @@ export class UserTraysService {
         return throwError(() => error); // Re-throw the error
       })
     );
-    // This method gets all the user_trays and sets userTraySelected to the .last value of the array
+    // This method gets all the user_trays
   }
 
   unpackUserTray() {
@@ -96,9 +98,7 @@ export class UserTraysService {
         next: (tray) => this.populateShelf(tray),
         error: (error) => console.error('Error fetching seed:', error)
       });
-      console.log('SUCCESS user-tray.service sendSeedToDB')
     });
-    // MORE WORK HERE???:
   }
 
   populateShelf(userTrays: Tray[]) {
@@ -183,4 +183,13 @@ export class UserTraysService {
     return value;
 }
 
+  onDeleteUserTray(tray:Tray) {
+    this.seedApiService.removeUserTray(tray).subscribe(() => {
+      this.fetchUserTrays().subscribe({
+        next: (tray) => this.populateShelf(tray),
+        error: (error) => console.error('Error fetching User Trays:', error)
+    });
+  })
+
+}
 }

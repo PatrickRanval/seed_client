@@ -34,15 +34,14 @@ export class TrayService {
     console.log('tray.service has called fetchTray()');
     return this.seedApiService.getTrays().pipe(
       map((data: any[]) => {
-        console.log(data);
-
         // Map the array of data to an array of Tray objects
         const trays: Tray[] = data.map(trayData => {
           return new Tray(
             null,
             trayData.name,
             trayData.cells_short,
-            trayData.cells_long
+            trayData.cells_long,
+            null
           );
         });
         return trays; // Return the array of trays to the subscriber

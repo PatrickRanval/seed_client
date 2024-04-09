@@ -1,10 +1,15 @@
-<h4>Your Planted Trays:</h4>
 <!-- <button (click)="onFetchUserTrays()">DEBUG GET TRAYS</button> -->
 <div class="container">
+  <h4>Your Planted Trays:</h4>
   @for (tray of availableUserTrays; track $index) {
-  <div class="tray-item" (click)="onSelectTray(tray)">
+    <div class="tray-item" (click)="onSelectTray(tray)">
       <div>{{ tray.trayName }}</div>
       <div>✅ {{tray.cellsShort}} × {{tray.cellsLong}}</div>
-  </div>
+    </div>
+    <div class="row-element">
+      <p class="info"> {{ tray.createdOn }}</p>
+      <button class="btn-seed-warn btn-space-left" (click)="onRemove(tray)">X</button>
+    </div>
+    <br>
   }
   </div>
