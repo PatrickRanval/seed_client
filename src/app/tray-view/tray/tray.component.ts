@@ -15,7 +15,6 @@ import { UserTraysService } from '../../shared/services/user-trays.service';
 })
 export class TrayComponent implements OnInit {
   cellSize:string = '2rem'; // Default width
-  cellOffset: string = '3rem'
   saveSuccess:boolean = false;
 
   seedSelected!: Seed | null;
@@ -71,7 +70,6 @@ export class TrayComponent implements OnInit {
       const containerHeight = 12; // in rem
       const cellArea = containerWidth * containerHeight / totalCells;
       const cellSize = Math.sqrt(cellArea);
-      this.cellOffset = `${-1.5*cellSize}rem`;
       this.cellSize = `${cellSize}rem`;
     }
   }
@@ -91,8 +89,13 @@ export class TrayComponent implements OnInit {
       }
   }
 
-  setGridCol(row: number, col: number){
-
+  setGridCol(col: number){
+    if (this.traySelected && this.seedSelected) {
+      for (let i = 0; i < this.traySelected.cellsShort; i++) {
+      // Initialize a seed in each cell, overwrites any value there
+        this.traySelected.gridValues[i][col] = this.seedSelected;
+        }
+    }
   }
 
   setGridAll(){

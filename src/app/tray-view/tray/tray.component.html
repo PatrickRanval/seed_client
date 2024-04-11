@@ -4,7 +4,7 @@
   } @else {
     <div class="horizontal-button-wrapper">
       @for (dwnbtn of getIterable(traySelected.cellsLong); track dwnbtn;) {
-        <div class="cell-select-down" [style.height]="cellSize" [style.width]="cellSize">↓</div>
+        <div class="cell-select-down" [style.height]="cellSize" [style.width]="cellSize" (click)="setGridCol($index)">↓</div>
       }
       <div class="cell-select-all" [style.width]="cellSize" [style.height]="cellSize" (click)="setGridAll()">⇙</div>
     </div>
@@ -19,8 +19,8 @@
               }
     </div>
     <div class="vertical-button-wrapper">
-      @for (acrosssbtn of getIterable(traySelected.cellsShort); track acrosssbtn;) {
-        <div class="cell-select-across" [style.height]="cellSize" [style.width]="cellSize" [style.right]="cellOffset">←</div>
+      @for (acrossbtn of getIterable(traySelected.cellsShort); track acrossbtn;) {
+        <div class="cell-select-across" [style.height]="cellSize" [style.width]="cellSize" (click)="setGridRow($index)">←</div>
       }
         @if(saveSuccess) {
           <div class="modal-overlay">
