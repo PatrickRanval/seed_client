@@ -15,12 +15,13 @@ import { UserTraysService } from '../../shared/services/user-trays.service';
 })
 export class TrayComponent implements OnInit {
   cellSize:string = '2rem'; // Default width
+  cellOffset: string = '3rem'
   saveSuccess:boolean = false;
 
   seedSelected!: Seed | null;
   private seedSelectedSubscription!: Subscription;
 
-  traySelected!: Tray | null;
+  traySelected: Tray | null = null;
   private traySelectedSubscription!: Subscription;
 
   constructor(private seedService: SeedService, private trayService:TrayService, private userTrayService:UserTraysService) {}
@@ -70,6 +71,7 @@ export class TrayComponent implements OnInit {
       const containerHeight = 12; // in rem
       const cellArea = containerWidth * containerHeight / totalCells;
       const cellSize = Math.sqrt(cellArea);
+      this.cellOffset = `${-1.5*cellSize}rem`;
       this.cellSize = `${cellSize}rem`;
     }
   }
@@ -80,12 +82,44 @@ export class TrayComponent implements OnInit {
     }
   }
 
+  setGridRow(row: number){
+    if (this.traySelected && this.seedSelected) {
+        for (let j = 0; j < this.traySelected.cellsLong; j++) {
+        // Initialize a seed in each cell, overwrites any value there
+          this.traySelected.gridValues[row][j] = this.seedSelected;
+          }
+      }
+  }
+
+  setGridCol(row: number, col: number){
+
+  }
+
+  setGridAll(){
+    if (this.traySelected && this.seedSelected) {
+      for (let i = 0; i < this.traySelected.cellsShort; i++) {
+
+          this.traySelected.gridValues[i] = []; // Initialize the row only if it hasn't been initialized yet
+
+
+        for (let j = 0; j < this.traySelected.cellsLong; j++) {
+            this.traySelected.gridValues[i][j] = this.seedSelected;
+          }
+        }
+
+      }
+    }
+
   summonSuccess() {
     this.saveSuccess = true;
 
     setTimeout(() => {
         this.saveSuccess = false;
     }, 500);
+  }
+
+  getIterable(length: number): any[] {
+    return new Array(length);
   }
 
 

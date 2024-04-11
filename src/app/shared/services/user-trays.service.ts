@@ -9,10 +9,9 @@ import { BehaviorSubject, Observable, catchError, throwError, map } from 'rxjs';
 })
 export class UserTraysService {
 
-  defaultTray = new Tray(null, "Default 128", 8, 16, null);
-  private myUserTrays: Tray[] = [this.defaultTray];
+  private myUserTrays: Tray[] = [];
 
-  userTraySelected = new BehaviorSubject<Tray | null>(this.defaultTray);
+  userTraySelected = new BehaviorSubject<Tray | null>(null);
   userTrayShelf = new BehaviorSubject<Tray[] | null>(this.myUserTrays);
 
   constructor(private seedApiService: SeedApiService) {
@@ -45,7 +44,6 @@ export class UserTraysService {
             this.parseGrid(trayData.seed_map, trayData.tray.cells_short, trayData.tray.cells_long)
           );
         });
-        debugger
         return trays;
       }),
       catchError((error) => {

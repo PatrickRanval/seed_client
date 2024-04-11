@@ -7,6 +7,7 @@
   --trayLav: #d6d6f6;
   --subBrown: #C76824;
   --seedGreen: #349C5F;
+  --seedActive: #33b435;
 
   --appOrange: #EC742F;
   --bedBrown: #C76824;
@@ -19,6 +20,8 @@
   --appGreen: #c4f9a6;
   --appBlue: #42ADD0;
   --appLightBlue: #a3ddee;
+  --appLightPink: #F4C2C2;
+  --appPeach: #F5D5B5;
 
   background-color: var(--appGreen);
 }
@@ -94,7 +97,7 @@ body {
 
 /* Hover state */
 .btn-seed-add:hover {
-  background-color: #33b435; /* Change to a darker green on hover */
+  background-color: var(--seedActive); /* Change to a darker green on hover */
 }
 
 .btn-seed-neutral {

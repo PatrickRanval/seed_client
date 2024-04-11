@@ -1,13 +1,25 @@
+.horizontal-button-wrapper {
+  display:flex;
+  flex-direction: row;
+}
+
+.vertical-button-wrapper {
+  display:flex;
+  flex-direction: column;
+}
+
 .container {
   // width: fit-content;
   position: relative;
-  width: 24rem;
-  height: 12rem;
+
+
+  // width: 24rem;
+  // height: 12rem;
   z-index: 1;
   border-style: solid;
-  border-width: 5px;
+  border-width: .2rem;
   border-radius: .5em;
-  background-color: black;
+  background-color: #000;
 }
 
 .modal-overlay {
@@ -52,6 +64,48 @@
   align-items: center;
   justify-content: center;
 }
+
+
+.cell-select-down:hover,
+.cell-select-across:hover,
+.cell-select-all:hover {
+  background-color: var(--seedActive); /* Change to a darker green on hover */
+}
+//UHHHHH
+//UHHHHH
+//UHHHHH
+
+.cell-select-down,
+.cell-select-across,
+.cell-select-all {
+  position: relative;
+  border: 2px solid #000;
+  border-radius: 0.5em;
+  color: var(--ssGold);
+  font-weight: bolder;
+  background-color: var(--ssDarkGreen);
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cell-select-down {
+  left: 0.2em;
+  bottom: 0.2em;
+}
+
+.cell-select-across {
+  left: 0.2em;
+  top: 0.2em;
+}
+
+.cell-select-all {
+  left: 0.4em;
+  bottom: 0.2em;
+  background-color: var(--ssLightGreen); /* Assuming --ssLightGreen is defined elsewhere */
+}
+
 
 @media (max-width: 481px) {
   .wrapper {
