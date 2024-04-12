@@ -1,4 +1,5 @@
 <div class="wrapper">
+
   @if (traySelected == null) {
     <div class="container" [style.display]="'none'"></div>
   } @else {
@@ -9,7 +10,14 @@
       <div class="cell-select-all" [style.width]="cellSize" [style.height]="cellSize" (click)="setGridAll()">⇙</div>
     </div>
     <div class="horizontal-button-wrapper">
-            <div class="container">
+      <div class="container">
+              @if(saveSuccess) {
+                <div class="modal-overlay">
+                  <div class="success">
+                    SUCCESS!
+                  </div>
+                </div>
+              }
               @for (col of traySelected.gridValues!; track col; let i = $index) {
                 <div class="row">
                   @for (row of traySelected.gridValues[i]; track row; let j = $index) {
@@ -22,14 +30,8 @@
       @for (acrossbtn of getIterable(traySelected.cellsShort); track acrossbtn;) {
         <div class="cell-select-across" [style.height]="cellSize" [style.width]="cellSize" (click)="setGridRow($index)">←</div>
       }
-        @if(saveSuccess) {
-          <div class="modal-overlay">
-            <div class="success">
-              SUCCESS!
-            </div>
-          </div>
-        }
-      </div>
+    </div>
+
     </div>
   <br>
   <button class="btn-seed-add" (click)="saveAsUserTray(traySelected)">Save Tray!</button>

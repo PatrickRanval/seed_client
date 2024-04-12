@@ -118,7 +118,7 @@ export class TrayComponent implements OnInit {
 
     setTimeout(() => {
         this.saveSuccess = false;
-    }, 500);
+    }, 800);
   }
 
   getIterable(length: number): any[] {

@@ -9,12 +9,7 @@
 }
 
 .container {
-  // width: fit-content;
   position: relative;
-
-
-  // width: 24rem;
-  // height: 12rem;
   z-index: 1;
   border-style: solid;
   border-width: .2rem;
@@ -23,13 +18,14 @@
 }
 
 .modal-overlay {
-  position: relative;
-  bottom: 100%;
+  position: absolute;
+  top: 0;
+  left: 0; 
   width: 100%;
   height: 100%;
   border-radius: .5em;
   background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent overlay */
-  z-index: 2; /* Place the overlay above the container */
+  z-index: 3; /* Place the overlay above the container */
 }
 
 .success {
@@ -43,7 +39,7 @@
   font-size: 2em;
   background-color: var(--seedGreen);
   color: var(--appLightManilla);
-  z-index: 3; /* Place the success modal above the overlay */
+  z-index: 4; /* Place the success modal above the overlay */
   display: flex;
   justify-content: center;
   align-items: center;
