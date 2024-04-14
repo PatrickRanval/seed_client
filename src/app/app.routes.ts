@@ -1,23 +1,36 @@
 import { Routes } from '@angular/router';
+import { LoginComponent } from './login/login.component';
+import { LandingComponent } from './landing/landing.component';
+import { TrayViewComponent } from './tray-view/tray-view.component';
+import { SeedShelfComponent } from './seed-shelf/seed-shelf.component';
+import { AuthGuard } from './shared/services/auth.guard';
 
 export const routes: Routes = [
-
   {
-    path: '',
-    pathMatch: 'full',
-    loadComponent: () => import('./login/login.component').then((c) => c.LoginComponent)
+    path: 'login',
+    component: LoginComponent
   },
   {
     path: 'signup',
-    loadComponent: () => import('./landing/landing.component').then((c) => c.LandingComponent)
+    component: LandingComponent
   },
   {
-    path: 'user/:id/trays',
-    loadComponent: () => import('./tray-view/tray-view.component').then((c) => c.TrayViewComponent),
+    path: 'user/:id',
+    canActivate: [ AuthGuard ],
+    children: [
+      {
+        path: 'trays',
+        component: TrayViewComponent
+      },
+      {
+        path: 'shelf',
+        component: SeedShelfComponent
+      }
+    ]
   },
+  // Redirect any other route to the login page
   {
-    path: 'user/:id/shelf',
-    loadComponent: () => import('./seed-shelf/seed-shelf.component').then((c) => c.SeedShelfComponent),
-  },
-
-]; 
+    path: '**',
+    redirectTo: 'login'
+  }
+];

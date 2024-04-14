@@ -33,13 +33,11 @@ export class NavbarComponent implements OnInit, OnDestroy {
   }
 
   onSeedShelf(): void {
-    const id = this.userService.getUserId();
-    this.router.navigate([`/user/${id}/shelf`]);
+    this.router.navigate(['user', this.userService.getUserId(), 'shelf']);
   }
 
   onTrays(): void {
-    const id = this.userService.getUserId();
-    this.router.navigate([`/user/${id}/trays`]);
+    this.router.navigate(['user', this.userService.getUserId(), 'trays']);
   }
 
   onLogout(): void {

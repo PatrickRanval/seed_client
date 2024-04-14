@@ -21,6 +21,8 @@
       <input type="password" formControlName="passwordConfirm" />
     </div>
     <button type="submit" [disabled]="!signupForm.valid">Signup</button>
-    <button type="button" (click)="manuallyNavigateAway()">MANUALLY NAVIGATE AWAY</button>
+
+    <h5>Whoops, already a member?</h5>
+    <button class="btn-seed-signup" routerLink="/login">Login</button>
   </form>
 </div>
