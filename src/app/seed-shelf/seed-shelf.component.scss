@@ -6,40 +6,7 @@
   display: flex;
 }
 
-.seed-item {
-  display: flex;
-  align-items: center;
-  padding: 10px;
-  border: 2px solid black;
-  border-radius: 8px;
-  cursor: pointer;
-  background-color: var(--appManilla);
-  transition: background-color 0.3s ease;
-}
 
-.seed-item:hover:not(.selected) {
-  background-color: var(--ssGold);
-}
-
-.selected {
-  transition: background-color 1s ease;
-  background-color: var(--ssLightGreen);
-}
-
-button {
-  cursor: pointer;
-  padding: 5px;
-  margin-right: 10px;
-  font-size: 1em;
-}
-
-input {
-  background-color: transparent;
-  font-size: 1em;
-  border: none;
-  border-bottom: 2px dashed #CCC; /* Add dotted underline */
-  /* outline: none;  Remove default focus outline */
-}
 
 .left-column {
   flex: 6; /* Take up 6/12 of the available space */

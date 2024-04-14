@@ -1,0 +1,20 @@
+<div class="container">
+  <h2>Find Seeds</h2>
+  <div class="seed-item">
+    <button style="background-color: #000">🌱</button>
+    <input type="text" style="font-weight: bold;" [(ngModel)]="queryTerm" placeholder="Search for Seeds">
+    <button class="btn-seed-add" [disabled]="!queryTerm" style="margin-left: auto;" (click)="onSearch(queryTerm)">
+      Search!
+    </button>
+  </div>
+  @for (seed of seedSearchResults; track seed) {
+    <div class="seed-item">
+      <button [style.background-color]="seed.displayColor"> 🌱 </button>
+      <span><b>{{seed.type}}</b>, '{{seed.variety}}'</span>
+      <button class="btn-seed-add" style="width: 30%; margin-left: auto;" (click)="onAddThisSeed(seed)">
+        Add to Collection
+      </button>
+    </div>
+  }
+  <h4>{{ message }}</h4>
+</div>

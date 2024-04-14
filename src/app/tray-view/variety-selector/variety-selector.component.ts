@@ -15,7 +15,7 @@ export class VarietySelectorComponent {
   // ! is disabling strict, which causes an initilization error to be thrown on these declarations
   // Dunno if this is best practice but it make red line go away
 
-  seedCollection!: Seed[];
+  seedCollection: Seed[]| null = null;
   seedSelected: Seed | null = null;
   private seedShelfSubscription!: Subscription;
   private seedSelectedSubscription!: Subscription;
