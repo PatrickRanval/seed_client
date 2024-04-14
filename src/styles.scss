@@ -22,6 +22,7 @@
   --appLightBlue: #a3ddee;
   --appLightPink: #F4C2C2;
   --appPeach: #F5D5B5;
+  --appWarn: #990000;
 
   background-color: var(--appGreen);
 }
@@ -81,7 +82,7 @@ body {
 }
 
 .btn-seed-add {
-  margin-left: auto;
+  position: relative;
   background-color: var(--ssLightGreen); /* Green background color */
   border: 2px solid var(--ssDarkGreen); /* 2 pixels border with dark green color */
   border-radius: 0.5rem; /* Border radius of 0.5rem */
@@ -120,7 +121,7 @@ body {
   border: 2px solid var(--ssDarkGreen);
   border-radius: 0.5rem;
   color: black;
-  transition: background-color 0.3s ease; 
+  transition: background-color 0.3s ease;
 }
 
 .btn-seed-signup:hover {

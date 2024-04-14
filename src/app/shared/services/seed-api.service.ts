@@ -72,12 +72,20 @@ export class SeedApiService {
     return res
   }
 
+  searchVariety(queryString:string) :Observable<any> {
+    let res = this.http.get<any>(`${environment.apiUrl}/varieties?search=${queryString}`)
+    .pipe(
+      catchError(this.handleError)
+    );
+  console.log(`Response Data:`, res);
+  return res;
+  }
+
   getTrays(): Observable<any> {
     let res = this.http.get<any>(`${environment.apiUrl}/trays`)
     .pipe(
       catchError(this.handleError)
     );
-  console.log(`Response Data:`, res);
   return res;
   }
 

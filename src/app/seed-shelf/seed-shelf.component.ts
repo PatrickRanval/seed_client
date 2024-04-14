@@ -5,59 +5,21 @@ import { UserService } from '../shared/services/user.service';
 import { Subscription } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { SeedCollectionComponent } from './seed-collection/seed-collection.component';
+import { SeedSearchComponent } from './seed-search/seed-search.component';
 
 @Component({
   selector: 'app-seed-shelf',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, SeedCollectionComponent, SeedSearchComponent],
   templateUrl: './seed-shelf.component.html',
   styleUrl: './seed-shelf.component.scss'
 })
 export class SeedShelfComponent {
-  seedCollection!: Seed[];
-  seedSelected: Seed | null = null;
-  private seedShelfSubscription!: Subscription;
-  private seedSelectedSubscription!: Subscription;
 
-  constructor(private seedService: SeedService, private userService:UserService) {}
-
-  //Not sure about this:
-  type:string = '';
-  variety:string = '';
+  constructor() {}
 
 
-  ngOnInit() {
-    this.seedCollection = this.seedService.getSeedShelf();
-      this.seedShelfSubscription = this.seedService.seedShelf.subscribe((collection) => {
-      this.seedCollection = collection;
-    });
-
-    this.seedSelectedSubscription = this.seedService.seedSelected.subscribe((seed) => {
-      this.seedSelected = seed;
-    });
-  }
-
-  ngOnDestroy() {
-
-    this.seedShelfSubscription.unsubscribe();
-    this.seedSelectedSubscription.unsubscribe();
-  }
-
-  onGetSpecificSeed(seed:any) {
-    this.seedService.setSelectedSeed(seed);
-  }
-
-  onCreateSeed() {
-    const seed = new Seed(null, this.type, this.variety);
-
-    this.seedService.sendSeedToDB(seed);
-    this.type = '';
-    this.variety = '';
-}
-
-  onRemoveSeed(seed:Seed) {
-   this.seedService.removeSeedFromShelf(seed);
-  }
 
   //DEBUG METHODS
 
