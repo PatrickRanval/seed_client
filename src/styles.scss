@@ -114,3 +114,16 @@ body {
   background-color: var(--appBlue);
 }
 
+.btn-seed-signup {
+  background-color: var(--ssLightGreen);
+  padding: 0.75em;
+  border: 2px solid var(--ssDarkGreen);
+  border-radius: 0.5rem;
+  color: black;
+  transition: background-color 0.3s ease; 
+}
+
+.btn-seed-signup:hover {
+  background-color: var(--seedActive);
+  color: black;  color: var(--appLightManilla);}
+

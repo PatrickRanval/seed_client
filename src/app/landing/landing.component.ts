@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators, ValidatorFn, AbstractControl, ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from '../shared/services/auth.service';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { UserService } from '../shared/services/user.service';
 
 
 @Component({
   selector: 'app-landing',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, RouterModule],
   templateUrl: './landing.component.html',
   styleUrl: './landing.component.scss'
 })
@@ -63,10 +63,4 @@ export class LandingComponent {
 
     return password && passwordConfirm && password.value !== passwordConfirm.value ? { passwordMismatch: true } : null;
   }
-
-    // DEBUG METHOD
-    manuallyNavigateAway() {
-      let id = this.userService.getUserId();
-      this.router.navigate([`/user/${id}/trays`]);
-    }
 }
