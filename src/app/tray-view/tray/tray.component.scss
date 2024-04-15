@@ -17,10 +17,16 @@
   background-color: #000;
 }
 
+.save-button-wrapper {
+  margin-left: 5%;
+  margin-top: auto;
+  padding: 0.5em;
+}
+
 .modal-overlay {
   position: absolute;
   top: 0;
-  left: 0; 
+  left: 0;
   width: 100%;
   height: 100%;
   border-radius: .5em;
@@ -54,7 +60,7 @@
   // height: 2rem;
   border: 2px solid #000;
   border-radius: 0.5em;
-  background-color: #C19A6B;
+  background-color: var(--appSoil);
   box-sizing: border-box;
   display: flex;
   align-items: center;
@@ -68,9 +74,6 @@
   background-color: var(--seedActive); /* Change to a darker green on hover */
 }
 
-//UHHHHH
-//UHHHHH
-//UHHHHH
 
 .cell-select-down,
 .cell-select-across,

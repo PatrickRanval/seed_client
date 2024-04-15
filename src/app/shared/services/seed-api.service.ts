@@ -46,10 +46,6 @@ export class SeedApiService {
 
   sendSeed(seedDataToRails:any): Observable<any> {
     //ALWAYS SUBSCRIBE TO THE OBSERVABLE
-    //ALWAYS SUBSCRIBE TO THE OBSERVABLE
-    //ALWAYS SUBSCRIBE TO THE OBSERVABLE
-    //ALWAYS SUBSCRIBE TO THE OBSERVABLE
-    //ALWAYS SUBSCRIBE TO THE OBSERVABLE
     let id = this.userService.getUserId();
     console.log(`payload to send`, seedDataToRails);
     let res = this.http.post<any>(`${environment.apiUrl}/users/${id}/user_varieties`, seedDataToRails)
@@ -60,10 +56,6 @@ export class SeedApiService {
   }
 
   removeSeed(seedUid:number){
-    //INCONSISTENT BEHAVIOR HERE
-    //INCONSISTENT BEHAVIOR HERE
-    //INCONSISTENT BEHAVIOR HERE
-
     let id = this.userService.getUserId();
     let res = this.http.delete<any>(`${environment.apiUrl}/users/${id}/user_varieties/${seedUid}`)
     .pipe(
@@ -131,10 +123,7 @@ export class SeedApiService {
 
 
   private handleError(error: any) {
-
     console.error('FAIL, client side', error);
-
-    // Rethrow the error or return a custom error message
     return throwError(() => new Error('Something went wrong. Please try again later.'));
   }
 }

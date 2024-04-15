@@ -17,7 +17,7 @@ export class Seed {
     let l = 50;
 
     if (typeof this.variety !== 'string') {
-        return null; // Return null as fallback
+        return null; 
     }
 
     h = ((this.variety.charCodeAt(0) % 12) * 30) + this.variety.length;

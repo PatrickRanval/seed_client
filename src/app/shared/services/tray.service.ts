@@ -10,18 +10,11 @@ import { Observable, map, BehaviorSubject, catchError, throwError } from 'rxjs';
 export class TrayService {
 
   traySelected = new BehaviorSubject<Tray | null>(null);
-
-  //START HERE TOMORROW:
-  //Blind changed trayShelf from Subject to BehaviorSubject and initiated on hunch that this might fix an issue.
-  //Possibly unwise. Too tired to chase it down and verify whether that fixes things tonight.
-
   trayShelf = new BehaviorSubject<Tray[] | null>(null);
 
   private availableTrays:Tray[] = [];
 
   constructor(private seedApiService:SeedApiService) {
-
-  //Fix to initialize with ngOnInit and unsubscribe ngOnDestroy
 
   this.fetchTrays().subscribe({
     next: (tray) => this.addTraysToShelf(tray),
@@ -62,8 +55,6 @@ export class TrayService {
   getTrayShelf() {
     return [...this.availableTrays];
   }
-
-  //These may move to user_tray.service:
 
   setSelectedTray(tray:any){
     this.initializeGrid(tray);

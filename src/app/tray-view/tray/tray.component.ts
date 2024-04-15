@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Seed } from '../../shared/models/seed.model';
 import { Tray } from '../../shared/models/tray.model';
 import { SeedService } from '../../shared/services/seed.service';
-import { Subscription, timeout } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { TrayService } from '../../shared/services/tray.service';
 import { UserTraysService } from '../../shared/services/user-trays.service';
 
@@ -17,7 +17,7 @@ export class TrayComponent implements OnInit {
   cellSize:string = '2rem'; // Default width
   saveSuccess:boolean = false;
 
-  seedSelected!: Seed | null;
+  seedSelected: Seed | null = null;
   private seedSelectedSubscription!: Subscription;
 
   traySelected: Tray | null = null;
@@ -27,12 +27,12 @@ export class TrayComponent implements OnInit {
 
   ngOnInit() {
 
-    //To quote Kanye "This s*** kray!" Here we subscribe to the traySelected in the trayService
+    //This is cool, dual subscriptions to one variable
     this.traySelectedSubscription = this.trayService.traySelected.subscribe((tray) => {
       this.traySelected = tray;
       this.calculateCSS()
     });
-    //But hold up, because here we also subscribe to the userTraySelected in the userTrayService
+    //We also subscribe to the userTraySelected in the userTrayService
     this.traySelectedSubscription = this.userTrayService.userTraySelected.subscribe((userTray) => {
       this.traySelected = userTray;
       this.calculateCSS()
@@ -49,6 +49,8 @@ export class TrayComponent implements OnInit {
   }
 
   saveAsUserTray(tray: Tray) {
+
+    //The use of structured clone is interesting/important because of a genuine memory address issue here
     let updatedTray = structuredClone(tray);
 
     //We check if that value is non-null and already includes the tray being passed
@@ -72,6 +74,10 @@ export class TrayComponent implements OnInit {
       const cellSize = Math.sqrt(cellArea);
       this.cellSize = `${cellSize}rem`;
     }
+  }
+
+  setSelectedFromTray(seed:Seed){
+    this.seedService.seedSelected.next(seed);
   }
 
   setGridValue(row: number, col: number) {

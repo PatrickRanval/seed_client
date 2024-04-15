@@ -3,6 +3,7 @@
   @if (traySelected == null) {
     <div class="container" [style.display]="'none'"></div>
   } @else {
+    <h5>Plant your Tray:</h5>
     <div class="horizontal-button-wrapper">
       @for (dwnbtn of getIterable(traySelected.cellsLong); track dwnbtn;) {
         <div class="cell-select-down" [style.height]="cellSize" [style.width]="cellSize" (click)="setGridCol($index)">↓</div>
@@ -21,8 +22,10 @@
               @for (col of traySelected.gridValues!; track col; let i = $index) {
                 <div class="row">
                   @for (row of traySelected.gridValues[i]; track row; let j = $index) {
-                    <div class="cell" [style.height]="cellSize" [style.width]="cellSize" (click)="setGridValue(i,j)" [style.background-color]="traySelected.gridValues[i][j].displayColor"> @if (traySelected.gridValues[i][j].variety != '') {<span>🌱</span>} </div>
-                  }
+                    @if (seedSelected == null) {
+                    <div class="cell" [style.height]="cellSize" [style.width]="cellSize" (click)="setSelectedFromTray(traySelected.gridValues[i][j])" [style.background-color]="traySelected.gridValues[i][j].displayColor"> @if (traySelected.gridValues[i][j].variety != '') {<span>🌱</span>} </div>
+                  } @else { <div class="cell" [style.height]="cellSize" [style.width]="cellSize" (click)="setGridValue(i,j)" [style.background-color]="traySelected.gridValues[i][j].displayColor"> @if (traySelected.gridValues[i][j].variety != '') {<span>🌱</span>} </div>
+                }}
                 </div>
               }
     </div>
@@ -31,10 +34,13 @@
         <div class="cell-select-across" [style.height]="cellSize" [style.width]="cellSize" (click)="setGridRow($index)">←</div>
       }
     </div>
-
-    </div>
+  <div class="save-button-wrapper">
+    <button class="btn-seed-save" (click)="saveAsUserTray(traySelected)">Save Tray!</button>
+  </div>
+ </div>
   <br>
-  <button class="btn-seed-add" (click)="saveAsUserTray(traySelected)">Save Tray!</button>
+
+
 }
 </div>
 

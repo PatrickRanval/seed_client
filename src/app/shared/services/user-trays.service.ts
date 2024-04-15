@@ -21,12 +21,6 @@ export class UserTraysService {
     });
   }
 
-  // SCOPE:
-
-  // user-trays needs to be able to map generic trays and populate their gridValues
-  // user-trays will save these mapped generic trays as unique objects associated with the user
-  // user-trays will be invoked within the tray component
-
   fetchUserTrays(): Observable<Tray[]> {
     this.myUserTrays = [];
     return this.seedApiService.getUserTrays().pipe(
@@ -34,8 +28,6 @@ export class UserTraysService {
         // Map the array of data to an array of Tray objects
         const trays: Tray[] = data.map(trayData => {
             return new Tray(
-            // THIS NEEDS WORK
-            // DATA FROM
             trayData.id,
             trayData.tray.name,
             trayData.tray.cells_short,
@@ -54,9 +46,6 @@ export class UserTraysService {
     // This method gets all the user_trays
   }
 
-  unpackUserTray() {
-    // This method takes the gridValues from userTraySelected and maps it to the display
-  }
 
   saveUserTray(tray: Tray) {
     // This method takes the userTraySelected in its current state and sends it to the database.
@@ -103,8 +92,6 @@ export class UserTraysService {
     this.myUserTrays.push(...userTrays);
     this.userTrayShelf.next([...this.myUserTrays]);
   }
-
-  // I think it is possible or even likely that all tray rendering logic winds up in user-tray.service (which would move initialize grid from tray.service to user_tray.service)
 
   setSelectedUserTray(tray: any) {
     this.populateGrid(tray);
