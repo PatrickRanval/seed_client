@@ -52,7 +52,6 @@ export class SeedService {
 populateShelf (seeds:Seed[]) {
   this.mySeeds.push(...seeds);
   this.seedShelf.next([...this.mySeeds]);
-  console.log(this.mySeeds);
 }
 
 getSeedShelf() {
@@ -64,9 +63,9 @@ setSelectedSeed(seed:any){
 }
 
 addSeedToShelf (seed:Seed) {
-      this.mySeeds.push(seed);
-      this.seedShelf.next([...this.mySeeds]);
-  }
+    this.mySeeds.push(seed);
+    this.seedShelf.next([...this.mySeeds]);
+}
 
 removeSeedFromShelf(seed:Seed) {
   let seedUid = seed.uid || 0;

@@ -13,6 +13,8 @@ import { Seed } from '../../shared/models/seed.model';
 
 export class VarietySelectorComponent {
 
+  nullSeedObject = new Seed(0, '', '');
+
   seedCollection: Seed[]| null = null;
   seedSelected: Seed | null = null;
   private seedShelfSubscription!: Subscription;

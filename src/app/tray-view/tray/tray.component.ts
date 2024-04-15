@@ -17,7 +17,7 @@ export class TrayComponent implements OnInit {
   cellSize:string = '2rem'; // Default width
   saveSuccess:boolean = false;
 
-  seedSelected!: Seed | null;
+  seedSelected: Seed | null = null;
   private seedSelectedSubscription!: Subscription;
 
   traySelected: Tray | null = null;
@@ -74,6 +74,10 @@ export class TrayComponent implements OnInit {
       const cellSize = Math.sqrt(cellArea);
       this.cellSize = `${cellSize}rem`;
     }
+  }
+
+  setSelectedFromTray(seed:Seed){
+    this.seedService.seedSelected.next(seed);
   }
 
   setGridValue(row: number, col: number) {

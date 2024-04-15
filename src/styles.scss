@@ -23,6 +23,7 @@
   --appLightPink: #F4C2C2;
   --appPeach: #F5D5B5;
   --appWarn: #990000;
+  --appSoil: #C19A6B;
 
   background-color: var(--appGreen);
 }
@@ -79,6 +80,21 @@ body {
   &:hover {
     background-color: #ff3333; /* Change to a darker red on hover */
   }
+}
+
+.btn-seed-save {
+  position: relative;
+  background-color: var(--appLightPink);
+  border: 2px solid black;
+  padding: 20%;
+  border-radius: 0.5rem;
+  color: black;
+  transition: background-color 0.3s ease;
+}
+
+.btn-seed-save:hover {
+  background-color: var(--seedGreen);
+  color: var(--appLightManilla)
 }
 
 .btn-seed-add {

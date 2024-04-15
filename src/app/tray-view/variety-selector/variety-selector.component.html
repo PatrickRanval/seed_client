@@ -1,7 +1,27 @@
-<h4>Your Seed Collection:</h4>
+@if (seedSelected) {
 <div class="container">
+  <h5>Now Planting:</h5>
+    @if (seedSelected.uid == 0) {
+      <div (click)="onGetSpecificSeed(nullSeedObject)" class="seed-item"><button style="background-color:#a56953">🟫</button>
+        <span><b>Blank Cell</b></span>
+      </div>
+    } @else {
+      <div class="seed-item-selected" ><button [style.background-color]="seedSelected.displayColor"> 🌱 </button>
+        <span><b>{{seedSelected.type}}</b>, '{{seedSelected.variety}}'</span>
+      </div>
+    }
+  </div>
+  }
+<h5>Select a Seed from Your Collection:</h5>
+<div class="container">
+  <div (click)="onGetSpecificSeed(nullSeedObject)" class="seed-item"><button style="background-color:#a56953">🟫</button>
+    <span><b>Blank Cell</b></span>
+  </div>
+  <div (click)="onGetSpecificSeed(null)" class="seed-item"><button style="background-color:#00d26a">❇️</button>
+    <span><b>Unselect</b></span>
+  </div>
   @for (seed of seedCollection; track seed) {
-    <div (click)="onGetSpecificSeed(seed)" [class.selected]="seedSelected === seed" class="seed-item"><button [style.background-color]="seed.displayColor"> 🌱 </button>
+    <div (click)="onGetSpecificSeed(seed)" class="seed-item"><button [style.background-color]="seed.displayColor"> 🌱 </button>
       <span><b>{{seed.type}}</b>, '{{seed.variety}}'</span>
     </div>
   }

@@ -1,6 +1,6 @@
 @if(!hide){
   <div>
-    <h4>Select A Blank Tray:</h4>
+    <h5>Select A Blank Tray:</h5>
     <div class="container">
     @for (tray of availableTrays; track tray.trayName) {
     <div class="tray-item" (click)="onSelectTray(tray)">
@@ -12,4 +12,3 @@
 </div>
 }
 <button class="btn-seed-neutral" (click)="toggleHide()">Collapse</button>
-<h3>Plant your Tray:</h3>
