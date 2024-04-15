@@ -15,6 +15,7 @@ import { LandingComponent } from './landing/landing.component';
   styleUrl: './app.component.scss'
 })
 export class AppComponent implements OnInit {
+  //Change Title Maybe??
   title = 'seed_client';
 
   constructor (private authService:AuthService, private userService:UserService){}
@@ -25,7 +26,4 @@ export class AppComponent implements OnInit {
       this.userService.setUserFromDecodedToken(token);
     }
   }
-
 }
-
-//Not sure if Login Component needs to be here. Added RouterModule

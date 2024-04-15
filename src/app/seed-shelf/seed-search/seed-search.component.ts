@@ -17,7 +17,6 @@ export class SeedSearchComponent {
 
   constructor(private seedService: SeedService, private userService:UserService) {}
 
-  //Not sure about this:
   queryTerm:string = '';
   message:string = '';
 

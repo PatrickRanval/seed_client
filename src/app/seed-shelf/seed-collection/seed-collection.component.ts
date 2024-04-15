@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { Seed } from '../../shared/models/seed.model';
 import { SeedService } from '../../shared/services/seed.service';
-import { UserService } from '../../shared/services/user.service';
 import { Subscription } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -19,9 +18,8 @@ export class SeedCollectionComponent {
   private seedShelfSubscription!: Subscription;
   private seedSelectedSubscription!: Subscription;
 
-  constructor(private seedService: SeedService, private userService:UserService) {}
+  constructor(private seedService: SeedService) {}
 
-  //Not sure about this:
   type:string = '';
   variety:string = '';
 
@@ -59,6 +57,5 @@ export class SeedCollectionComponent {
    this.seedService.removeSeedFromShelf(seed);
   }
 
-  //DEBUG METHODS
 
 }

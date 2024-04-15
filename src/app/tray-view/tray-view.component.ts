@@ -11,8 +11,4 @@ import { UserTraysComponent } from './user-trays/user-trays.component';
   templateUrl: './tray-view.component.html',
   styleUrl: './tray-view.component.scss'
 })
-export class TrayViewComponent {
-
-
-
-}
+export class TrayViewComponent {}

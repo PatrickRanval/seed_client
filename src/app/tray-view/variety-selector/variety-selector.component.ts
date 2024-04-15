@@ -12,8 +12,6 @@ import { Seed } from '../../shared/models/seed.model';
 })
 
 export class VarietySelectorComponent {
-  // ! is disabling strict, which causes an initilization error to be thrown on these declarations
-  // Dunno if this is best practice but it make red line go away
 
   seedCollection: Seed[]| null = null;
   seedSelected: Seed | null = null;

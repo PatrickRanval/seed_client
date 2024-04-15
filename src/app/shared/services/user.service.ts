@@ -13,7 +13,6 @@ export class UserService {
   public userId:number | null = null;
 
   public currentUserSubject: BehaviorSubject<User | null> = new BehaviorSubject<User | null>(null);
-  // public currentUser$: Observable<User | null> = this.currentUserSubject.asObservable();
 
   constructor() {}
 

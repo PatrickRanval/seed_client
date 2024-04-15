@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators, ValidatorFn, AbstractControl, ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from '../shared/services/auth.service';
-import { Router, RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { UserService } from '../shared/services/user.service';
 
 
@@ -16,7 +16,7 @@ export class LandingComponent {
   signupForm: FormGroup;
 
 
-  constructor(private authService:AuthService, private router:Router, private userService:UserService) {
+  constructor(private authService:AuthService, private userService:UserService) {
     this.signupForm = new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email]),
       firstName: new FormControl('', Validators.required),
